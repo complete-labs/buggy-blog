@@ -12,7 +12,7 @@ To create the blog posts we use [`remark`](https://github.com/remarkjs/remark) a
 
 Preview the example live on [StackBlitz](http://stackblitz.com/):
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/blog-starter-typescript)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/sh953/blog)
 
 ## Deploy your own
 
