@@ -53,7 +53,7 @@ export const getStaticProps = async () => {
     'excerpt',
     'isPremium',
   ])
-  console.log({allPosts});
+
   return {
     props: { allPosts },
   }

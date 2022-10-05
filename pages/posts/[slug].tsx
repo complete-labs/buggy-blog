@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
@@ -24,13 +24,12 @@ const Post = ({ post, morePosts, preview }: Props) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
-  (console.log(post.isPremium));
   useEffect(() => {
-    if (post.isPremium === 'true') {
-      (console.log('post.isPremium'));
-      router.push('/login?rt=${post.slug}');
-    }
+    if(post.isPremium && (localStorage.getItem('loggedInUser') === null) || localStorage.getItem('loggedInUser') === '') {
+      router.push(`/login?rt=${post.slug}`);
+    }  
   })
+  
   return (
     <Layout preview={preview}>
       <Container>

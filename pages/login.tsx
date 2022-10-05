@@ -1,62 +1,64 @@
-import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
-import Layout from '../components/layout'
-import { getAllPosts } from '../lib/api'
-import Head from 'next/head'
-import { CMS_NAME } from '../lib/constants'
-import React, { useState } from 'react';
+import Router from 'next/router';
+import React from 'react';
 
-import Post from '../types/post'
+// User Login info
+const userCredsDB = [
+  {
+    username: "user",
+    password: "pass"
+  },
+  {
+    username: "user2",
+    password: "pass2"
+  }
+];
 
-type Props = {
-  allPosts: Post[]
-}
+const handleSubmit = (event: React.FormEvent<EventTarget>) => {
+  //Prevent page reload
+  event.preventDefault();
 
-const [username, setUserName] = useState();
-const [password, setPassword] = useState();
-const [] = useState();
+  var { uname, pass } = document.forms[0];
 
-const handleSubmit = async e => {
-    e.preventDefault();
-    if (username === 'user' && password === 'pass'){
-        setToken(token);
-    } 
-}
+  // Find user login info
+  const userData = userCredsDB.find((user) => user.username === uname.value);
 
-const Login = ({ allPosts }: Props) => {
-  return (
-    <>
-      <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={handleSubmit}>
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
-          <div className="form-group mt-3">
-            <label>username onChange={e => setUserName(e.target.value)} </label>
-            <input
-              className="form-control mt-1"
-              placeholder="Enter username"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password onChange={e => setPassword(e.target.value)} </label>
-            <input
-              className="form-control mt-1"
-              placeholder="Enter password"
-            />
-          </div>
-          <div className="d-grid gap-2 mt-3">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
-          </div>
-          
+  // Compare user info
+  if (userData) {
+    if (userData.password !== pass.value) {
+      // Invalid password
+      // Don't distinguish password and username error messages, allows user to confirm if username exists or not
+      // TODO: display error
+    } else {
+        //Login success
+        localStorage.setItem('loggedInUser', userData.username);
+        const params = new URLSearchParams(window.location.search);
+        Router.push(`/posts/${params.get("rt")}`)
+    }
+  } else {
+    // Invalid username
+    // Don't distinguish password and username error messages, allows user to confirm if username exists or not
+    // TODO: display error
+  }
+};
+
+export default function Login() {
+  return(
+    // JSX code for login form
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <div className="input-container">
+          <label>Username </label>
+          <input type="text" name="uname" required />
         </div>
-        </form>
+        <div className="input-container">
+          <label>Password </label>
+          <input type="password" name="pass" required />
         </div>
-    </>
+        <div className="button-container">
+          <input type="submit" />
+        </div>
+      </form>
+    </div>
   )
 }
 
-export default Login

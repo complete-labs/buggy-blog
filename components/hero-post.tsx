@@ -11,7 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
-  isPremium: string
+  isPremium: boolean
 }
 
 const HeroPost = ({
@@ -42,7 +42,7 @@ const HeroPost = ({
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
           <Avatar name={author.name} picture={author.picture} />
-          <p className="text-lg leading-relaxed mb-4">{isPremium}</p>
+          <p className="mb-4 text-4xl">{isPremium ? '*Premium Article*' : ''}</p>
         </div>
       </div>
     </section>

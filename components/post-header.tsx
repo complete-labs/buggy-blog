@@ -9,7 +9,7 @@ type Props = {
   coverImage: string
   date: string
   author: Author
-  isPremium: string
+  isPremium: boolean
 }
 
 const PostHeader = ({ title, coverImage, date, author, isPremium }: Props) => {
