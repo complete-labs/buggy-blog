@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import React, { useEffect } from 'react';
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
@@ -23,6 +24,13 @@ const Post = ({ post, morePosts, preview }: Props) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+  (console.log(post.isPremium));
+  useEffect(() => {
+    if (post.isPremium === 'true') {
+      (console.log('post.isPremium'));
+      router.push('/login?rt=${post.slug}');
+    }
+  })
   return (
     <Layout preview={preview}>
       <Container>
@@ -43,6 +51,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                isPremium={post.isPremium}
               />
               <PostBody content={post.content} />
             </article>
@@ -70,6 +79,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 

@@ -9,9 +9,10 @@ type Props = {
   coverImage: string
   date: string
   author: Author
+  isPremium: string
 }
 
-const PostHeader = ({ title, coverImage, date, author }: Props) => {
+const PostHeader = ({ title, coverImage, date, author, isPremium }: Props) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>

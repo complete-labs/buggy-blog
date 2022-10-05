@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  isPremium: string
 }
 
 const HeroPost = ({
@@ -19,6 +20,7 @@ const HeroPost = ({
   date,
   excerpt,
   author,
+  isPremium,
   slug,
 }: Props) => {
   return (
@@ -40,6 +42,7 @@ const HeroPost = ({
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
           <Avatar name={author.name} picture={author.picture} />
+          <p className="text-lg leading-relaxed mb-4">{isPremium}</p>
         </div>
       </div>
     </section>
