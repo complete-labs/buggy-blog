@@ -5,17 +5,22 @@ type Props = {
   title: string
   src: string
   slug?: string
+  premium: boolean
 }
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage = ({ title, src, slug, premium }: Props) => {
   const image = (
-    <img
-      src={src}
-      alt={`Cover Image for ${title}`}
-      className={cn('shadow-small', {
-        'hover:shadow-medium transition-shadow duration-200': slug,
-      })}
-    />
+    <div className="relative">
+      <img
+        src={src}
+        alt={`Cover Image for ${title}`}
+        className={cn('shadow-small', {
+          'hover:shadow-medium transition-shadow duration-200': slug,
+        })}
+      />
+
+      {premium && <img src="/assets/blog/premium.png" className="absolute top-4 right-4 w-8 h-8" />}
+    </div>
   )
   return (
     <div className="sm:mx-0">

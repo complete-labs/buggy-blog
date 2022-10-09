@@ -11,6 +11,9 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { getCookie } from "cookies-next";
+import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
 
 type Props = {
   post: PostType
@@ -43,6 +46,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                premium={post.premium}
               />
               <PostBody content={post.content} />
             </article>
@@ -55,13 +59,23 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
 export default Post
 
-type Params = {
-  params: {
-    slug: string
-  }
+interface Params extends ParsedUrlQuery {
+  slug: string;
 }
 
-export async function getStaticProps({ params }: Params) {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { req, res } = context;
+  const params = context.params as Params;
+
+  if (getCookie("secret", { req, res }) !== "helloworld") {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
   const post = getPostBySlug(params.slug, [
     'title',
     'date',
@@ -70,6 +84,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 
@@ -80,20 +95,5 @@ export async function getStaticProps({ params }: Params) {
         content,
       },
     },
-  }
-}
-
-export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
-
-  return {
-    paths: posts.map((post) => {
-      return {
-        params: {
-          slug: post.slug,
-        },
-      }
-    }),
-    fallback: false,
   }
 }
