@@ -11,6 +11,9 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { useCookies } from "react-cookie"
+import {useEffect} from "react";
+
 
 type Props = {
   post: PostType
@@ -19,10 +22,32 @@ type Props = {
 }
 
 const Post = ({ post, morePosts, preview }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
+
+  const [cookies] = useCookies();
+
+
+
+
+    useEffect( () => {
+      console.log(post);
+
+      if (!post.isPremium) return;
+
+       const authToken = cookies.user;
+        if (!authToken){
+        router.push(`/login?nextPath=${post.slug}`)
+  }
+
+    }, []);
+
+
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+
   }
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -63,6 +88,7 @@ type Params = {
 
 export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
+    'isPremium',
     'title',
     'date',
     'slug',
