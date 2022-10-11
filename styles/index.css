@@ -13,3 +13,101 @@
 /* Stop purging. */
 
 /* Your own custom utilities */
+:root{
+	--color-primary: #0091ff;
+	--color-secondary: #0091ff;
+	--color-inverse-font:  #f4f4f4;
+}
+
+
+/* Badges */
+
+.preview-cover{
+	position: relative;
+}
+
+.premium-badge {
+    position: absolute;
+    top: 10px;right: 10px;
+    padding: 4px 20px;
+    color: var(--color-inverse-font);
+    background: var(--color-primary);
+    pointer-events: none;
+}
+
+/* header */
+.header{
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Login Module Styling */
+
+.login-wall{
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	top: 0;left: 0;
+	background: #f4f4f4d4;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.login-wall form{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	row-gap: 10px;
+	height: 100%;
+	width: min(90%, 400px);
+	margin:  0 auto;
+}
+
+.login-wall input{
+	width: 100%;
+	padding: 15px 25px;
+}
+
+.login-wall h2{
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	color: var(--color-primary);
+}
+
+.login-lock{
+	fill: var(--color-primary);
+	width: 16px;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.btn{
+	width: 100%;
+	background:  var(--color-primary);
+	padding: 15px 25px;
+	color: var(--color-inverse-font);
+}
+
+.noscroll{
+	overflow: hidden;
+}
+
+.login-wall:after{
+	content: '';
+	width: 100%;
+	height: 30%;
+	position: absolute;
+	bottom: 0;left: 0;
+	background: linear-gradient(to top, #f4f4f4, #f4f4f400);
+}
+
+
+
+
+
+
+
+
