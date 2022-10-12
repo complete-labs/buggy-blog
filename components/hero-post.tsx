@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  state: string
 }
 
 const HeroPost = ({
@@ -20,6 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  state,
 }: Props) => {
   return (
     <section>
@@ -35,6 +37,9 @@ const HeroPost = ({
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
+            <div className='text-black font-bold border-black'>
+              <p className=''>{state}</p>
+            </div>
           </div>
         </div>
         <div>

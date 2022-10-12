@@ -9,9 +9,10 @@ type Props = {
   coverImage: string
   date: string
   author: Author
+  state: string
 }
 
-const PostHeader = ({ title, coverImage, date, author }: Props) => {
+const PostHeader = ({ title, coverImage, date, author, state }: Props) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -27,6 +28,7 @@ const PostHeader = ({ title, coverImage, date, author }: Props) => {
         </div>
         <div className="mb-6 text-lg">
           <DateFormatter dateString={date} />
+          <p>{state}</p>
         </div>
       </div>
     </>

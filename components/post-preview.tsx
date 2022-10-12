@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  state: string
 }
 
 const PostPreview = ({
@@ -20,6 +21,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  state,
 }: Props) => {
   return (
     <div>
@@ -33,6 +35,9 @@ const PostPreview = ({
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
+        <div className='text-black font-bold border-black'>
+              <p className=''>{state}</p>
+        </div>
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />
