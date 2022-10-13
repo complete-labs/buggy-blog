@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { LoginModal } from '../../components/login'
 
 type Props = {
   post: PostType
@@ -20,9 +21,14 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+
+
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+  const premium = post?.premium;
+  const fullTitle = premium ? post?.title + " <PREMIUM>" : post?.title;
   return (
     <Layout preview={preview}>
       <Container>
@@ -39,12 +45,16 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
               <PostHeader
-                title={post.title}
+                title={fullTitle}
+                // title={post.title}
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              {premium
+              ? (<LoginModal/>)
+              : <PostBody content={post.content} />
+              }
             </article>
           </>
         )}
@@ -70,8 +80,11 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium'
   ])
   const content = await markdownToHtml(post.content || '')
+
+  console.log("hello premium? ", post.premium)
 
   return {
     props: {
