@@ -28,6 +28,9 @@ export function getPostBySlug(slug: string, fields: string[] = []) {
     if (field === 'content') {
       items[field] = content
     }
+    if (field === 'premium') {
+      items[field] = data[field]
+    }
 
     if (typeof data[field] !== 'undefined') {
       items[field] = data[field]
