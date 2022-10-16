@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import { Login } from './login'
 
 type Props = {
   title: string
@@ -11,6 +12,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  isPremium: boolean
 }
 
 const HeroPost = ({
@@ -20,18 +22,22 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isPremium
 }: Props) => {
   return (
     <section>
       <div className="mb-8 md:mb-16">
         <CoverImage title={title} src={coverImage} slug={slug} />
       </div>
+      {isPremium && <button className="premium-btn">premium</button>}
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
           <h3 className="mb-4 text-4xl lg:text-6xl leading-tight">
-            <Link as={`/posts/${slug}`} href="/posts/[slug]">
-              <a className="hover:underline">{title}</a>
-            </Link>
+            {isPremium ? <Login /> : 
+              <Link as={`/posts/${slug}`} href="/posts/[slug]">
+                <a className="hover:underline">{title}</a>
+              </Link>
+            }
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
