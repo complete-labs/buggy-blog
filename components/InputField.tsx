@@ -2,13 +2,8 @@ interface inputFieldProps {
     labelName: string;
     placeholderName: string;
     value: string | '';
-    inputWidth?: string;
     onChange?: Function | null;
-    icon?: any;
     type: string;
-    disabled?: boolean;
-    required?: boolean;
-    rootClassName?: string;
   }
   
   export const InputField = (props: inputFieldProps) => {
@@ -26,13 +21,13 @@ interface inputFieldProps {
         <div className="flex flex-col relative w-full">
           <input
             name={props.placeholderName}
-            className={`peer focus:ring-0 p-2 bg-white placeholder-transparent  focus:outline-none  border-t-0 border-l-0 border-r-0  border-b-2 border-[#acb1b3] ${props.inputWidth}`
+            className={`peer focus:ring-0 p-2 bg-white placeholder-transparent  focus:outline-none  border-t-0 border-l-0 border-r-0  border-b-2 border-[#acb1b3]`
             }
             title={props.placeholderName}
             placeholder={props.placeholderName}
             onChange={(e) => handleChange(e)}
             value={props.value}
-            type='text'
+            type={props.type}
           
           />
           <label
