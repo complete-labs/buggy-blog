@@ -7,6 +7,7 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
+import Login from '../components/Login'
 
 type Props = {
   allPosts: Post[]
@@ -17,11 +18,13 @@ const Index = ({ allPosts }: Props) => {
   const morePosts = allPosts.slice(1)
   return (
     <>
+    <Login/>
       <Layout>
         <Head>
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
+       
           <Intro />
           {heroPost && (
             <HeroPost
@@ -37,6 +40,7 @@ const Index = ({ allPosts }: Props) => {
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
       </Layout>
+     
     </>
   )
 }
