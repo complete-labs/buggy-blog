@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import { PremiumIndication } from './PremiumIndication'
 
 type Props = {
   title: string
@@ -10,7 +11,8 @@ type Props = {
   date: string
   excerpt: string
   author: Author
-  slug: string
+  slug: string,
+  isPremium: boolean
 }
 
 const HeroPost = ({
@@ -20,10 +22,13 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isPremium
+
 }: Props) => {
   return (
     <section>
-      <div className="mb-8 md:mb-16">
+      <div className="mb-8 md:mb-16 relative">
+      <PremiumIndication isPremium={isPremium} />
         <CoverImage title={title} src={coverImage} slug={slug} />
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">

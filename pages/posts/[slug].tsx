@@ -19,6 +19,7 @@ type Props = {
 }
 
 const Post = ({ post, morePosts, preview }: Props) => {
+  console.log(post.isPremium)
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
@@ -70,6 +71,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium'
   ])
   const content = await markdownToHtml(post.content || '')
 

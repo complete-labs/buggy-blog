@@ -20,6 +20,7 @@ const MoreStories = ({ posts }: Props) => {
             date={post.date}
             author={post.author}
             slug={post.slug}
+            isPremium={post.isPremium}
             excerpt={post.excerpt}
           />
         ))}
