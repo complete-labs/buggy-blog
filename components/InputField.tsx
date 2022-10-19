@@ -28,6 +28,7 @@ interface inputFieldProps {
             onChange={(e) => handleChange(e)}
             value={props.value}
             type={props.type}
+            readOnly
           
           />
           <label
