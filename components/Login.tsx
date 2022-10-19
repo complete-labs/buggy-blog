@@ -17,7 +17,8 @@ const Login = (props: loginProps) => {
         if (props.isPremium) {
             let cookie = document.cookie;
             if (cookie.split(";")[2] != undefined) {
-                setLoginStatus(false)}
+                setLoginStatus(false)
+            }
             else {
                 setLoginStatus(true)
             }
