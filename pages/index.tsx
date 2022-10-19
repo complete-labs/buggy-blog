@@ -18,13 +18,11 @@ const Index = ({ allPosts }: Props) => {
   const morePosts = allPosts.slice(1)
   return (
     <>
-    <Login/>
       <Layout>
         <Head>
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
-       
           <Intro />
           {heroPost && (
             <HeroPost
@@ -40,7 +38,7 @@ const Index = ({ allPosts }: Props) => {
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </Container>
       </Layout>
-     
+
     </>
   )
 }
