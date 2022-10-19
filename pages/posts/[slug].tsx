@@ -11,7 +11,6 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
-import { useState, useEffect } from 'react'
 import Login from '../../components/Login'
 
 type Props = {
@@ -51,7 +50,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
           </>
         )}
       </Container>
-      <Login isPremium={post.isPremium}/>
+      <Login isPremium={post.isPremium} />
     </Layout>
   )
 }
@@ -64,7 +63,7 @@ type Params = {
   }
 }
 
-export async function getStaticProps({ params}: Params) {
+export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
     'title',
     'date',
