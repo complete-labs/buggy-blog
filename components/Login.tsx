@@ -1,7 +1,6 @@
 import { useState, Fragment, useEffect, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { InputField } from './InputField'
-import { useRouter } from 'next/router'
 import cookies from "js-cookie"
 import { UserContext } from './LoginContext'
 
@@ -24,36 +23,20 @@ const Login = (props: loginProps) => {
     const { cookie, signedUser } = useContext(UserContext)
 
     useEffect(() => {
-
         if (props.isPremium) {
             console.log(cookie.length)
             if (cookie.length > 0) {
-                console.log("cookie is not empty")
                 setLoginStatus(false)
             }
             else {
-                console.log("is empty")
                 setLoginStatus(true)
-
             }
-
         }
         else {
             setLoginStatus(true)
         }
-
-
     })
 
-
-
-
-
-    const router = useRouter()
-    const closeModal = () => {
-        router.push("/")
-
-    }
     const Login = () => {
         setLoginStatus(true)
         setTimeout(() => {
@@ -62,9 +45,6 @@ const Login = (props: loginProps) => {
 
         setLoginStatus(false);
     }
-
-
-
     return (
         <>
             <Transition show={loginStatus} as={Fragment}>
@@ -125,13 +105,8 @@ const Login = (props: loginProps) => {
                                                             d="M16.9497 7.05015C14.2161 4.31648 9.78392 4.31648 7.05025 7.05015C6.65973 7.44067 6.02656 7.44067 5.63604 7.05015C5.24551 6.65962 5.24551 6.02646 5.63604 5.63593C9.15076 2.12121 14.8492 2.12121 18.364 5.63593C18.7545 6.02646 18.7545 6.65962 18.364 7.05015C17.9734 7.44067 17.3403 7.44067 16.9497 7.05015Z"></path>
                                                     </svg>
                                                 </div> :
-                                                "Login"
-
-                                            }
-
-
+                                                "Login"}
                                         </button>
-
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
@@ -141,8 +116,6 @@ const Login = (props: loginProps) => {
             </Transition>
         </>
     )
-
-
 }
 
 export default Login;

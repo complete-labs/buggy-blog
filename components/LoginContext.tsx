@@ -1,5 +1,5 @@
 
-import { useState, createContext, FC} from "react";
+import { useState, createContext, FC } from "react";
 
 
 
@@ -14,12 +14,10 @@ const defaultValuie = {
 export const UserContext = createContext<IloginContext>(defaultValuie);
 
 
-
-export const LoginContext:FC = ({ children }) => {
+export const LoginContext: FC = ({ children }) => {
     const [cookie, setCookie] = useState(defaultValuie.cookie);
 
-
-    const signedUser = (cookie: string) => {
+        const signedUser = (cookie: string) => {
         setCookie(cookie)
     }
 
