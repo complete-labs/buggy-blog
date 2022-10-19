@@ -23,14 +23,8 @@ const Login = (props: loginProps) => {
     const { cookie, signedUser } = useContext(UserContext)
 
     useEffect(() => {
-        if (props.isPremium) {
-            console.log(cookie.length)
-            if (cookie.length > 0) {
-                setLoginStatus(false)
-            }
-            else {
-                setLoginStatus(true)
-            }
+        if (props.isPremium && cookie.length > 0) {
+            setLoginStatus(false)
         }
         else {
             setLoginStatus(true)
