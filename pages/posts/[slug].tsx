@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { parseCookies } from 'nookies'
+import Paywall from '../../components/paywall'
 
 type Props = {
   post: PostType
@@ -26,17 +28,16 @@ const Post = ({ post, morePosts, preview }: Props) => {
   return (
     <Layout preview={preview}>
       <Container>
-        <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-            <article className="mb-32">
+            <article className='mb-32'>
               <Head>
                 <title>
                   {post.title} | Next.js Blog Example with {CMS_NAME}
                 </title>
-                <meta property="og:image" content={post.ogImage.url} />
+                <meta property='og:image' content={post.ogImage.url} />
               </Head>
               <PostHeader
                 title={post.title}
@@ -44,7 +45,14 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              <PostBody
+                content={
+                  post.isPremium && !parseCookies().username
+                    ? post.excerpt
+                    : post.content
+                }
+              />
+              {post.isPremium && !parseCookies().username && <Paywall />}
             </article>
           </>
         )}
@@ -70,6 +78,8 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'excerpt',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 
