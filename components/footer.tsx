@@ -1,7 +1,17 @@
-import Container from './container'
-import { EXAMPLE_PATH } from '../lib/constants'
+import { deleteCookie } from "cookies-next";
+import { useContext } from "react";
+import { EXAMPLE_PATH } from "../lib/constants";
+import { AuthContext } from "./auth_context";
+import Container from "./container";
 
 const Footer = () => {
+  const authContext = useContext(AuthContext);
+
+  const logOut = () => {
+    authContext.logoutUser();
+    deleteCookie("isAuthenticated");
+  };
+
   return (
     <footer className="bg-accent-1 border-t border-accent-2">
       <Container>
@@ -22,11 +32,19 @@ const Footer = () => {
             >
               View on GitHub
             </a>
+            {authContext.isAuthenticated ? (
+              <button
+                className="mx-3 font-bold hover:underline"
+                onClick={logOut}
+              >
+                Logout
+              </button>
+            ) : null}
           </div>
         </div>
       </Container>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

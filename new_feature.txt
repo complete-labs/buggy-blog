@@ -1,0 +1,13 @@
+Paywall Feature:
+
+Goals
+- Business Insider - show 250 words of the post, and then block the remainder using some sort of login or signup
+    - Obscuring mechanism
+- The login modal allow for entering details up front, no redirect here, and then refresh the same page they're on
+
+
+Technical Specifications
+- Cookies, we want to persist, boolean for isUserAuthed
+- Context - carry state throughout the app, so we can store our auth state
+- hardcoded login
+- login form - component 

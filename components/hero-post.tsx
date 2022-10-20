@@ -1,17 +1,18 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import Link from 'next/link'
-import Author from '../types/author'
+import Link from "next/link";
+import Author from "../types/author";
+import Avatar from "./avatar";
+import CoverImage from "./cover-image";
+import DateFormatter from "./date-formatter";
 
 type Props = {
-  title: string
-  coverImage: string
-  date: string
-  excerpt: string
-  author: Author
-  slug: string
-}
+  title: string;
+  coverImage: string;
+  date: string;
+  excerpt: string;
+  author: Author;
+  slug: string;
+  isPremiumContent: boolean;
+};
 
 const HeroPost = ({
   title,
@@ -20,6 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isPremiumContent,
 }: Props) => {
   return (
     <section>
@@ -36,6 +38,13 @@ const HeroPost = ({
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
           </div>
+          {isPremiumContent ? (
+            <div className="mb-4 md:mb-0 text-lg">
+              <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
+                {isPremiumContent ? "Premium Content" : "Free Content"}
+              </span>
+            </div>
+          ) : null}
         </div>
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
@@ -43,7 +52,7 @@ const HeroPost = ({
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HeroPost
+export default HeroPost;
