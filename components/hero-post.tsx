@@ -38,7 +38,7 @@ const HeroPost = ({
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
             {premium ? (
-              <span className="ml-2 uppercase text-xs px-3 py-1 background-black font-semibold text-red-700 border-2 rounded-md">
+              <span className="ml-2 uppercase text-xs px-3 py-1 bg-yellow-400 font-semibold text-black border-2 rounded-md">
                 Premium
               </span>
             ) : null}
