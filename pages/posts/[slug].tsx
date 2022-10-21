@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import PaywallHOC from '../../components/paywall-hoc'
 
 type Props = {
   post: PostType
@@ -44,7 +45,9 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              <PaywallHOC>
+                <PostBody content={post.content} premium={post.premium} />
+              </PaywallHOC>
             </article>
           </>
         )}
@@ -70,6 +73,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 
