@@ -21,7 +21,12 @@ const Login = (props: any) => {
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
-          <LoginForm />
+          <div className="w-full flex justify-center items-center ">
+            <div className="w-96 max-w-xl mt-10 ">
+              <div className="text-2xl mb-4">Log in:</div>
+              <LoginForm />
+            </div>
+          </div>
         </Container>
       </Layout>
     </>

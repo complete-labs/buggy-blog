@@ -17,7 +17,7 @@ const LoginForm = (props: any) => {
     }
   }
   return (
-    <div className="flex items-center">
+    <div className="flex items-center w-full">
       <form
         className="py-8 px-8 w-full rounded-md border-2 shadow"
         onSubmit={onSubmit}
