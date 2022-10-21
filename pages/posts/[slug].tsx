@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import {  useContext } from 'react'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
@@ -12,6 +13,7 @@ import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
 import Login from '../../components/Login'
+import { UserContext } from '../../components/LoginContext'
 
 type Props = {
   post: PostType
@@ -20,13 +22,28 @@ type Props = {
 }
 
 const Post = ({ post, morePosts, preview }: Props) => {
+  const { cookie,signoutUser } = useContext(UserContext)
   const router = useRouter()
+
+  const handleLogout =()=>{
+    signoutUser?.()
+  }
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
   return (
     <Layout preview={preview}>
       <Container>
+        {cookie.length>0?
+              <div className="flex justify-end">
+              <button type="button"
+              onClick={handleLogout }
+                className="bg-indigo-500 inline-flex justify-center rounded-md border border-transparent 
+                mr-10 mt-10 px-4 py-2 text-sm font-medium text-white w-40  hover:bg-blue-400 focus:outline-none focus-visible:ring-2 
+            focus-visible:ring-blue-500 focus-visible:ring-offset-2">logout</button>
+            </div>:null }
+
         <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
