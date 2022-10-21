@@ -1,13 +1,14 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import Link from 'next/link'
-import Author from '../types/author'
+import Avatar from "./avatar"
+import DateFormatter from "./date-formatter"
+import CoverImage from "./cover-image"
+import Link from "next/link"
+import Author from "../types/author"
 
 type Props = {
   title: string
   coverImage: string
   date: string
+  premium: boolean
   excerpt: string
   author: Author
   slug: string
@@ -17,6 +18,7 @@ const HeroPost = ({
   title,
   coverImage,
   date,
+  premium,
   excerpt,
   author,
   slug,
@@ -35,6 +37,11 @@ const HeroPost = ({
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
+            {premium ? (
+              <span className="ml-2 uppercase text-xs px-3 py-1 background-black font-semibold text-red-700 border-2 rounded-md">
+                Premium
+              </span>
+            ) : null}
           </div>
         </div>
         <div>
