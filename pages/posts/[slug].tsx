@@ -27,6 +27,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
   const handleLogout =()=>{
     signoutUser?.()
+    router.push('/')
   }
 
   if (!router.isFallback && !post?.slug) {
