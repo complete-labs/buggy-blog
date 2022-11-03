@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import Container from '../../components/container'
@@ -11,6 +12,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import Auth from '../../components/auth'
 
 type Props = {
   post: PostType
@@ -20,9 +22,20 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    setIsAuthenticated(localStorage.getItem('authenticated') === 'true')
+  }, [])
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  if (post.isPremium && !isAuthenticated) {
+    return <Auth />
+  }
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -70,6 +83,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 
