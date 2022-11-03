@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  isPremium: boolean
 }
 
 const HeroPost = ({
@@ -20,6 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isPremium,
 }: Props) => {
   return (
     <section>
@@ -35,6 +37,7 @@ const HeroPost = ({
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
+            {isPremium && <span>Is Premium</span>}
           </div>
         </div>
         <div>
