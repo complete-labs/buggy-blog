@@ -41,7 +41,6 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
-          <h1>USER: {user}</h1>
             <article className="mb-32">
               <Head>
                 <title>
