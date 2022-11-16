@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import { Tier } from '../types/tier'
 
 type Props = {
   title: string
@@ -11,6 +12,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  tier: Tier
 }
 
 const HeroPost = ({
@@ -20,6 +22,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  tier,
 }: Props) => {
   return (
     <section>
@@ -28,6 +31,7 @@ const HeroPost = ({
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
+          <h4>{tier}</h4>
           <h3 className="mb-4 text-4xl lg:text-6xl leading-tight">
             <Link as={`/posts/${slug}`} href="/posts/[slug]">
               <a className="hover:underline">{title}</a>
