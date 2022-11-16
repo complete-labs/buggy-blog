@@ -11,6 +11,9 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { UserContext } from '../../lib/auth'
+import { useContext } from 'react'
+import { Tier } from '../../types/tier'
 
 type Props = {
   post: PostType
@@ -19,9 +22,16 @@ type Props = {
 }
 
 const Post = ({ post, morePosts, preview }: Props) => {
+  //fetch the user client-side
+  const { user, login } = useContext(UserContext)
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+  }
+  if (post.tier === Tier.PREMIUM && !user) {
+    return (
+      <h1 className='mt-12 mx-auto text-center'>To continue, please <button onClick={login} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>log in</button></h1>
+    )
   }
   return (
     <Layout preview={preview}>
@@ -31,6 +41,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
+          <h1>USER: {user}</h1>
             <article className="mb-32">
               <Head>
                 <title>
@@ -70,6 +81,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'tier',
   ])
   const content = await markdownToHtml(post.content || '')
 
