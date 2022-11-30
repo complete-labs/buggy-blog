@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import LoginModal from '../../components/login-modal'
+import { useMemo } from 'react'
 
 type Props = {
   post: PostType
@@ -20,6 +22,14 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+
+  // const showLoginModal = useMemo(() => {
+  //   if(post.isPremium) {
+  //     const loggedIn = document.cookie
+  //     return loggedIn === 'true' ? true : false
+  //   }
+  // }, [post.isPremium]);
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -46,6 +56,8 @@ const Post = ({ post, morePosts, preview }: Props) => {
               />
               <PostBody content={post.content} />
             </article>
+            {true && 
+              <LoginModal />}
           </>
         )}
       </Container>
@@ -70,6 +82,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 

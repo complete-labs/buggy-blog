@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  isPremium: boolean
 }
 
 const PostPreview = ({
@@ -20,6 +21,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  isPremium
 }: Props) => {
   return (
     <div>
@@ -28,7 +30,7 @@ const PostPreview = ({
       </div>
       <h3 className="text-3xl mb-3 leading-snug">
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a className="hover:underline">{title}</a>
+          <a className="hover:underline">{`[Premium Article]: ${title}`}</a>
         </Link>
       </h3>
       <div className="text-lg mb-4">
