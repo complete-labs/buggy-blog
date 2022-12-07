@@ -1,41 +1,41 @@
-# A statically generated blog example using Next.js, Markdown, and TypeScript
+# Paywall feature for Complete Blogs :sparkles:
 
-This is the existing [blog-starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter) plus TypeScript.
+This is a feature update for Complete Blogs that creates a paywall for premium articles. Articles that are labelled as "Premium 🔒" will not be seen by users until they have logged in. The blurb for Premium articles will also be hidden by users who are not logged in to a premium account.
 
-This example showcases Next.js's [Static Generation](https://nextjs.org/docs/basic-features/pages) feature using Markdown files as the data source.
+![Image of Paywall Feature](https://i.postimg.cc/6pWG4Bwf/Screen-Shot-2022-12-07-at-11-48-26-AM.png)
 
-The blog posts are stored in `/_posts` as Markdown files with front matter support. Adding a new Markdown file in there will create a new blog post.
+## Changes Made :hammer:
 
-To create the blog posts we use [`remark`](https://github.com/remarkjs/remark) and [`remark-html`](https://github.com/remarkjs/remark-html) to convert the Markdown files into an HTML string, and then send it down as a prop to the page. The metadata of every post is handled by [`gray-matter`](https://github.com/jonschlinkert/gray-matter) and also sent in props to the page.
+######  The changes made in this fork are as follows: 
+- Text under premium articles that read `Premium 🔒` if an article is premium and you are not logged in
+- A blurb feature that detects if an article is Premium and you are not logged in, and displays: `This content is only available to premium subscribers`
+- A login page that appears if you click on a premium article but are not yet logged in 
+- A login/signout button that appear on the top left of the page inside articles
+- A message that says "Signed in as <your email>"
+- All pages now have a `getserversideprops` which checks the authentication status of the user
 
-## Preview
+I am using NextAuth as my authentication for this project. This is an open source project by Next.js which you can use as an authenticator.
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/blog-starter-typescript)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/blog-starter-typescript&project-name=blog-starter-typescript&repository-name=blog-starter-typescript)
-
+My strategy with this project was to use the least amount of code to get the project done. As a result, this is why I decided to use NextAuth as it is an extendible third party library which you can tie in with Github, Google, etc... and would work well in a big project.
+  
 ## How to use
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+To run this program, clone this repository
 
-```bash
-npx create-next-app --example blog-starter-typescript blog-starter-typescript-app
-# or
-yarn create next-app --example blog-starter-typescript blog-starter-typescript-app
-```
+```git clone https://github.com/jenndryden/blog-paywall```
 
-Your blog should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
+Next, enter the folder 
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+```cd blog-paywall```
+
+Install the dependencies 
+
+```yarn install```
+
+To run the dev environment
+
+```yarn dev```
 
 # Notes
 
-This blog-starter-typescript uses [Tailwind CSS](https://tailwindcss.com). To control the generated stylesheet's filesize, this example uses Tailwind CSS' v2.0 [`purge` option](https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css) to remove unused CSS.
-
-[Tailwind CSS v2.0 no longer supports Node.js 8 or 10](https://tailwindcss.com/docs/upgrading-to-v2#upgrade-to-node-js-12-13-or-higher). To build your CSS you'll need to ensure you are running Node.js 12.13.0 or higher in both your local and CI environments.
+This project uses [Gitmojis](https://gitmoji.dev/)! 
