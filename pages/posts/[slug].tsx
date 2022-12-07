@@ -24,6 +24,7 @@ interface Params extends ParsedUrlQuery {
   slug: string;
 }
 
+// checks the authentication status of the user
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const {params} = context as Params
   const user = await getSession(context)

@@ -37,12 +37,13 @@ const PostPreview = ({
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
-        {premium && (!session || status=="loading") && <p>Premium 🔒</p>}
+        {premium && (!session || status=="loading") && <p>Premium 🔒</p>} 
       </div>
       <p className="text-lg leading-relaxed mb-4">{premium && (!session || status=="loading") ? <p>This content is only available to premium subscribers</p>:(excerpt)}</p>
       <Avatar name={author.name} picture={author.picture} />
     </div>
   )
+  /** used for adding text if article is premium or not, depending on if user is logged in. same with the blurb */
 }
 
 export default PostPreview

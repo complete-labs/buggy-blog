@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 
+// authenticating user, uses NextAuth to verify credentials. then uses callback to return 'user' or 'null' depending on if corrent information
 export default NextAuth({
     secret: process.env.AUTH_SECRET,
     session: {
