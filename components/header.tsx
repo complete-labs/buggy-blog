@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import LoginButton from './login-button'
 
 const Header = () => {
   return (
@@ -6,6 +7,7 @@ const Header = () => {
       <Link href="/">
         <a className="hover:underline">Blog</a>
       </Link>
+      <LoginButton/>
       .
     </h2>
   )

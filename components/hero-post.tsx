@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import { useSession } from 'next-auth/react'
 
 type Props = {
   title: string
@@ -23,6 +24,7 @@ const HeroPost = ({
   slug,
   premium
 }: Props) => {
+  const {data: session, status} = useSession()
   return (
     <section>
       <div className="mb-8 md:mb-16">
@@ -37,11 +39,12 @@ const HeroPost = ({
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
+            {premium && (!session || status=="loading") && <p>Premium 🔒</p>}
           </div>
         </div>
         <div>
-          <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-          <Avatar name={author.name} picture={author.picture} />
+        <p className="text-lg leading-relaxed mb-4">{premium && (!session || status=="loading") ? <p>This content is only available to premium subscribers</p>:(excerpt)}</p>
+        <Avatar name={author.name} picture={author.picture} />
         </div>
       </div>
     </section>

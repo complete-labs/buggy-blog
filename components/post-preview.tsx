@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import { useSession } from 'next-auth/react'
 
 type Props = {
   title: string
@@ -23,6 +24,7 @@ const PostPreview = ({
   slug,
   premium,
 }: Props) => {
+  const {data: session, status} = useSession()
   return (
     <div>
       <div className="mb-5">
@@ -35,9 +37,9 @@ const PostPreview = ({
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
-        {premium && <p>🔒 Premium</p>}
+        {premium && (!session || status=="loading") && <p>Premium 🔒</p>}
       </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      <p className="text-lg leading-relaxed mb-4">{premium && (!session || status=="loading") ? <p>This content is only available to premium subscribers</p>:(excerpt)}</p>
       <Avatar name={author.name} picture={author.picture} />
     </div>
   )
