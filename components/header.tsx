@@ -7,8 +7,7 @@ const Header = () => {
       <Link href="/">
         <a className="hover:underline">Blog</a>
       </Link>
-      <LoginButton/>
-      .
+      <div className="Login"><LoginButton/></div>
     </h2>
   )
 }
