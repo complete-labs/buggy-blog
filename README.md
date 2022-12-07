@@ -12,6 +12,7 @@ This is a feature update for Complete Blogs that creates a paywall for premium a
 - A login page that appears if you click on a premium article but are not yet logged in 
 - A login/signout button that appear on the top left of the page inside articles
 - A message that says "Signed in as <your email>"
+- All pages now have a `getserversideprops` which checks the authentication status of the user
 
 I am using NextAuth as my authentication for this project. This is an open source project by Next.js which you can use as an authenticator.
 
