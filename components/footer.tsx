@@ -1,5 +1,6 @@
 import Container from './container'
 import { EXAMPLE_PATH } from '../lib/constants'
+import LoginWidget from './login-widget';
 
 const Footer = () => {
   return (
@@ -22,6 +23,7 @@ const Footer = () => {
             >
               View on GitHub
             </a>
+            <LoginWidget preview={true} />
           </div>
         </div>
       </Container>

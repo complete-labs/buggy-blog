@@ -1,0 +1,8 @@
+.premium-badge {
+    box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
+    background-color: gold;
+    border-radius: 100px;
+    padding: 0px;
+    text-align: center;
+    margin-left: 8px;
+}

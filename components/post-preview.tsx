@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import PremiumBadge from './premium-badge';
 
 type Props = {
   title: string
@@ -11,6 +12,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  premium: boolean
 }
 
 const PostPreview = ({
@@ -20,6 +22,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  premium,
 }: Props) => {
   return (
     <div>
@@ -33,6 +36,7 @@ const PostPreview = ({
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
+        {premium && <PremiumBadge />}
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />

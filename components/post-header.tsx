@@ -3,15 +3,17 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import PostTitle from './post-title'
 import Author from '../types/author'
+import PremiumBadge from './premium-badge';
 
 type Props = {
   title: string
   coverImage: string
   date: string
   author: Author
+  premium: boolean
 }
 
-const PostHeader = ({ title, coverImage, date, author }: Props) => {
+const PostHeader = ({ title, coverImage, date, author, premium }: Props) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -27,6 +29,7 @@ const PostHeader = ({ title, coverImage, date, author }: Props) => {
         </div>
         <div className="mb-6 text-lg">
           <DateFormatter dateString={date} />
+          {premium && <PremiumBadge />}
         </div>
       </div>
     </>
