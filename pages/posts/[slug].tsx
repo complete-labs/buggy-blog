@@ -45,7 +45,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 author={post.author}
                 premium={post.premium}
               />
-              <PostBody content={post.content} />
+              <PostBody content={post.content} premium={post.premium} />
             </article>
           </>
         )}
