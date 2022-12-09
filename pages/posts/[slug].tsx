@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import React, { useState, useEffect } from 'react';
 
 type Props = {
   post: PostType
@@ -23,6 +24,14 @@ const Post = ({ post, morePosts, preview }: Props) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  useEffect(() => {
+    var username = localStorage.getItem("username");
+    if (post.premium && !username) {
+        router.push("/login");
+    }
+  });
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -70,6 +79,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium'
   ])
   const content = await markdownToHtml(post.content || '')
 
