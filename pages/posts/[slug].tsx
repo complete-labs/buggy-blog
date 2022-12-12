@@ -11,6 +11,9 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import Login from '../../components/login'
+import { useEffect, useState } from 'react';
+import { getCookie } from 'cookies-next';
 
 type Props = {
   post: PostType
@@ -20,6 +23,11 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+
+  let user = getCookie('user') 
+  const insession = typeof user !== "undefined"
+  const [view, setView] = useState(!post.premium || insession)
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -31,6 +39,9 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <PostTitle>Loading…</PostTitle>
         ) : (
           <>
+            { !view &&
+              <Login setView={setView}></Login>
+            }
             <article className="mb-32">
               <Head>
                 <title>
@@ -70,6 +81,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium'
   ])
   const content = await markdownToHtml(post.content || '')
 
