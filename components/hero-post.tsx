@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  premium?: boolean
 }
 
 const HeroPost = ({
@@ -20,6 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  premium
 }: Props) => {
   return (
     <section>
@@ -39,6 +41,9 @@ const HeroPost = ({
         </div>
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+          { premium && (
+            <p className="text-lg leading-relaxed mb-4">Premium Article</p>
+          )}
           <Avatar name={author.name} picture={author.picture} />
         </div>
       </div>
