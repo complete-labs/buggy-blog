@@ -11,6 +11,7 @@ type PostType = {
     url: string
   }
   content: string
+  paywalled: boolean
 }
 
 export default PostType

@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  paywalled: boolean
 }
 
 const PostPreview = ({
@@ -19,6 +20,7 @@ const PostPreview = ({
   date,
   excerpt,
   author,
+  paywalled,
   slug,
 }: Props) => {
   return (
@@ -34,6 +36,14 @@ const PostPreview = ({
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
       </div>
+      <div className="pb-3">
+        {paywalled && (
+          <span className="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">
+            Paywalled
+          </span>
+        )}
+      </div>
+
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />
     </div>

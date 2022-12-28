@@ -5,6 +5,7 @@ import PostBody from '../../components/post-body'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
 import Layout from '../../components/layout'
+import Login from "../../components/login"
 import { getPostBySlug, getAllPosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
@@ -22,6 +23,13 @@ const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+  }
+  if (
+    post.paywalled &&
+    typeof window !== "undefined" &&
+    !localStorage.getItem("auth")
+  ) {
+    return <Login slug={post.slug} />
   }
   return (
     <Layout preview={preview}>
@@ -70,6 +78,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'paywalled'
   ])
   const content = await markdownToHtml(post.content || '')
 
