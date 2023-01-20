@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { useEffect } from 'react'
+import AuthButton from '../../components/auth-button'
 
 type Props = {
   post: PostType
@@ -23,9 +25,20 @@ const Post = ({ post, morePosts, preview }: Props) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+  
+  // If the user is not logged in and the post is premium, redirect to login page
+  useEffect(() => {
+    const isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
+    
+    if (isUserLoggedIn != 'true' && post.isPremium) {
+      router.push('/login')
+    }
+  })
+
   return (
     <Layout preview={preview}>
       <Container>
+        <AuthButton />
         <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
@@ -70,6 +83,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 

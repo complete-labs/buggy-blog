@@ -7,6 +7,7 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
+import AuthButton from '../components/auth-button'
 
 type Props = {
   allPosts: Post[]
@@ -22,6 +23,7 @@ const Index = ({ allPosts }: Props) => {
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
+          <AuthButton />
           <Intro />
           {heroPost && (
             <HeroPost
@@ -50,6 +52,7 @@ export const getStaticProps = async () => {
     'author',
     'coverImage',
     'excerpt',
+    'isPremium',
   ])
 
   return {
