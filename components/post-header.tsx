@@ -1,15 +1,11 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import PostTitle from './post-title'
-import Author from '../types/author'
+import Avatar from "./avatar";
+import DateFormatter from "./date-formatter";
+import CoverImage from "./cover-image";
+import PostTitle from "./post-title";
+import PostType from "../types/post";
+import { memo } from "react";
 
-type Props = {
-  title: string
-  coverImage: string
-  date: string
-  author: Author
-}
+type Props = Omit<PostType, "slug" | "excerpt" | "ogImage" | "content">;
 
 const PostHeader = ({ title, coverImage, date, author }: Props) => {
   return (
@@ -30,7 +26,7 @@ const PostHeader = ({ title, coverImage, date, author }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default PostHeader
+export default memo(PostHeader)

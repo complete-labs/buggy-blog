@@ -1,17 +1,12 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import Link from 'next/link'
-import Author from '../types/author'
+import Avatar from "./avatar";
+import DateFormatter from "./date-formatter";
+import CoverImage from "./cover-image";
+import Link from "next/link";
+import PostType from "../types/post";
+import Tag from "./tag";
+import { memo } from "react";
 
-type Props = {
-  title: string
-  coverImage: string
-  date: string
-  excerpt: string
-  author: Author
-  slug: string
-}
+type Props = Omit<PostType, "ogImage" | "content">;
 
 const HeroPost = ({
   title,
@@ -20,6 +15,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  flagPremium,
 }: Props) => {
   return (
     <section>
@@ -36,6 +32,11 @@ const HeroPost = ({
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
           </div>
+          {flagPremium && (
+            <div className="w-40 mt-5">
+              <Tag />
+            </div>
+          )}
         </div>
         <div>
           <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
@@ -43,7 +44,7 @@ const HeroPost = ({
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HeroPost
+export default memo(HeroPost)
