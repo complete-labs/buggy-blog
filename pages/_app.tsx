@@ -1,6 +1,17 @@
-import { AppProps } from 'next/app'
-import '../styles/index.css'
+import { SessionProvider } from "next-auth/react";
+import { Login } from "../components/loginButton";
+import "../styles/index.css";
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export default function App({
+  //@ts-ignore
+  Component,
+  //@ts-ignore
+  pageProps: { session, ...pageProps },
+}) {
+  return (
+    <SessionProvider session={session}>
+      <Login />
+      <Component {...pageProps} />
+    </SessionProvider>
+  );
 }
