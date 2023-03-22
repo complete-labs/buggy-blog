@@ -31,9 +31,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
   const showPaywall = () => {
     const isLoggedIn = !!localStorage.getItem('loggedIn')
-    console.log('isloggedin', isLoggedIn)
     const isPremium = post?.premium
-    console.log('is premim', isPremium)
     if(!isPremium) return false
     if(isPremium && !isLoggedIn) return true
     return false

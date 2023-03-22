@@ -11,7 +11,6 @@ type Props = {
 }
 
 const Layout = ({ preview, children, showPaywall=false, excerpt }: Props) => {
-  console.log('show pyawall', showPaywall)
   return (
     <>
       <Meta />
