@@ -11,6 +11,10 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import LoginButton from '../../components/login'
+import Overlay from '../../components/overlay'
+import { useEffect, useState } from 'react'
+import Modal from '../../components/modal'
 
 type Props = {
   post: PostType
@@ -20,11 +24,26 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  const showPaywall = () => {
+    const isLoggedIn = !!localStorage.getItem('loggedIn')
+    console.log('isloggedin', isLoggedIn)
+    const isPremium = post?.premium
+    console.log('is premim', isPremium)
+    if(!isPremium) return false
+    if(isPremium && !isLoggedIn) return true
+    return false
+  }
+
   return (
-    <Layout preview={preview}>
+    <Layout preview={preview}
+    showPaywall={showPaywall()}
+    >
+      {showPaywall() && <Modal excerpt={post?.excerpt} />}
       <Container>
         <Header />
         {router.isFallback ? (
@@ -38,6 +57,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
+              <LoginButton />
               <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
@@ -70,6 +90,8 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
+    'excerpt',
   ])
   const content = await markdownToHtml(post.content || '')
 
