@@ -1,16 +1,18 @@
 import { useRouter } from "next/router"
 
-const LoginButton = () => {
-  const loggedIn = localStorage.getItem('loggedIn')
+const LoginButton = ({localStorageObj} : {localStorageObj: null | Storage}) => {
+  const loggedIn = localStorageObj ? localStorageObj.getItem('loggedIn') : false
   const router = useRouter()
 
   const onButtonClick = () => {
-    localStorage.setItem('loggedIn', 'loggedIn')
+    if(!localStorageObj) return
+    localStorageObj.setItem('loggedIn', 'loggedIn')
     router.reload()
   }
 
   const onLogout = () => {
-    localStorage.clear()
+    if(!localStorageObj) return
+    localStorageObj.clear()
     router.push('/')
   }
 

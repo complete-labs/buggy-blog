@@ -12,9 +12,8 @@ import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
 import LoginButton from '../../components/login'
-import Overlay from '../../components/overlay'
-import { useEffect, useState } from 'react'
 import Modal from '../../components/modal'
+import { useEffect, useState } from 'react'
 
 type Props = {
   post: PostType
@@ -23,14 +22,22 @@ type Props = {
 }
 
 const Post = ({ post, morePosts, preview }: Props) => {
+  const [localStorageObj, setLocalStorageObj] = useState<null | Storage>(null)
   const router = useRouter()
+
+  useEffect(() => {
+    if(typeof window !== 'undefined'){
+      // client is set
+      setLocalStorageObj(localStorage)
+    }
+  }, [])
 
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
 
   const showPaywall = () => {
-    const isLoggedIn = !!localStorage.getItem('loggedIn')
+    const isLoggedIn = localStorageObj ? localStorageObj.getItem('loggedIn') : false
     const isPremium = post?.premium
     if(!isPremium) return false
     if(isPremium && !isLoggedIn) return true
