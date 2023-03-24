@@ -11,9 +11,7 @@ import Head from 'next/head';
 import { CMS_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
-import LoginButton from '../../components/login';
 import Modal from '../../components/modal';
-import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 type Props = {
@@ -38,7 +36,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
   return (
     <Layout preview={preview} showPaywall={showPaywall()}>
-      {showPaywall() && <Modal excerpt={post?.excerpt} />}
+      {showPaywall() && <Modal />}
       <Container>
         <Header />
         {router.isFallback ? (
@@ -52,7 +50,6 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
-              <LoginButton />
               <PostHeader
                 title={post.title}
                 coverImage={post.coverImage}
