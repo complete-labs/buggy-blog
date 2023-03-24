@@ -1,53 +1,43 @@
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
-import Container from '../../components/container'
-import PostBody from '../../components/post-body'
-import Header from '../../components/header'
-import PostHeader from '../../components/post-header'
-import Layout from '../../components/layout'
-import { getPostBySlug, getAllPosts } from '../../lib/api'
-import PostTitle from '../../components/post-title'
-import Head from 'next/head'
-import { CMS_NAME } from '../../lib/constants'
-import markdownToHtml from '../../lib/markdownToHtml'
-import PostType from '../../types/post'
-import LoginButton from '../../components/login'
-import Modal from '../../components/modal'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router';
+import ErrorPage from 'next/error';
+import Container from '../../components/container';
+import PostBody from '../../components/post-body';
+import Header from '../../components/header';
+import PostHeader from '../../components/post-header';
+import Layout from '../../components/layout';
+import { getPostBySlug, getAllPosts } from '../../lib/api';
+import PostTitle from '../../components/post-title';
+import Head from 'next/head';
+import { CMS_NAME } from '../../lib/constants';
+import markdownToHtml from '../../lib/markdownToHtml';
+import PostType from '../../types/post';
+import LoginButton from '../../components/login';
+import Modal from '../../components/modal';
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 type Props = {
-  post: PostType
-  morePosts: PostType[]
-  preview?: boolean
-}
+  post: PostType;
+  morePosts: PostType[];
+  preview?: boolean;
+};
 
 const Post = ({ post, morePosts, preview }: Props) => {
-  const [localStorageObj, setLocalStorageObj] = useState<null | Storage>(null)
-  const router = useRouter()
-
-  useEffect(() => {
-    if(typeof window !== 'undefined'){
-      // client is set
-      setLocalStorageObj(localStorage)
-    }
-  }, [])
+  const router = useRouter();
+  const { data: session } = useSession();
 
   if (!router.isFallback && !post?.slug) {
-    return <ErrorPage statusCode={404} />
+    return <ErrorPage statusCode={404} />;
   }
 
   const showPaywall = () => {
-    const isLoggedIn = localStorageObj ? localStorageObj.getItem('loggedIn') : false
-    const isPremium = post?.premium
-    if(!isPremium) return false
-    if(isPremium && !isLoggedIn) return true
-    return false
-  }
+    const isPremium = post?.premium;
+    if (!isPremium) return false;
+    if (isPremium && !session) return true;
+  };
 
   return (
-    <Layout preview={preview}
-    showPaywall={showPaywall()}
-    >
+    <Layout preview={preview} showPaywall={showPaywall()}>
       {showPaywall() && <Modal excerpt={post?.excerpt} />}
       <Container>
         <Header />
@@ -75,16 +65,16 @@ const Post = ({ post, morePosts, preview }: Props) => {
         )}
       </Container>
     </Layout>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
 
 type Params = {
   params: {
-    slug: string
-  }
-}
+    slug: string;
+  };
+};
 
 export async function getStaticProps({ params }: Params) {
   const post = getPostBySlug(params.slug, [
@@ -97,8 +87,8 @@ export async function getStaticProps({ params }: Params) {
     'coverImage',
     'premium',
     'excerpt',
-  ])
-  const content = await markdownToHtml(post.content || '')
+  ]);
+  const content = await markdownToHtml(post.content || '');
 
   return {
     props: {
@@ -107,11 +97,11 @@ export async function getStaticProps({ params }: Params) {
         content,
       },
     },
-  }
+  };
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts(['slug'])
+  const posts = getAllPosts(['slug']);
 
   return {
     paths: posts.map((post) => {
@@ -119,8 +109,8 @@ export async function getStaticPaths() {
         params: {
           slug: post.slug,
         },
-      }
+      };
     }),
     fallback: false,
-  }
+  };
 }
