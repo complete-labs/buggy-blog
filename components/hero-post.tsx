@@ -32,12 +32,18 @@ const HeroPost = ({
         <div>
           <h3 className="mb-4 text-4xl lg:text-6xl leading-tight">
             <Link as={`/posts/${slug}`} href="/posts/[slug]">
-              <a className="hover:underline">
-                {title}
-              </a>
+              <a className="hover:underline">{title}</a>
             </Link>
+            {premium ? (
+              <span className="bg-purple-200 rounded-md font-semibold text-lg text-purple-600 ml-4 inline align-middle py-1 px-1">
+                Premium
+              </span>
+            ) : (
+              <div className="bg-gray-300 rounded-md font-semibold text-lg text-black ml-4 inline align-middle py-1 px-1">
+                Free
+              </div>
+            )}
           </h3>
-          {premium ? <div>Premium</div> : <div>Free</div>}
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
           </div>

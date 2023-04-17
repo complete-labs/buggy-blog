@@ -12,6 +12,7 @@ import { CMS_NAME } from "../../lib/constants";
 import markdownToHtml from "../../lib/markdownToHtml";
 import PostType from "../../types/post";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 type Props = {
   post: PostType;
@@ -24,13 +25,11 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
   useEffect(() => {
     const isLoggedInValue = localStorage.getItem("isLoggedIn");
-    console.log(isLoggedInValue);
 
     setIsLoggedIn(isLoggedInValue as string);
   }, []);
 
   function handleLogin() {
-    console.log("clicked");
     localStorage.setItem("isLoggedIn", "true");
     location.reload();
   }
@@ -66,12 +65,56 @@ const Post = ({ post, morePosts, preview }: Props) => {
       </Layout>
     );
   } else {
-    return (
-      <>
-        <div>Please Login:</div>
-        <button onClick={handleLogin}>Login</button>
-      </>
-    );
+    if (post.premium === false) {
+      return (
+        <Layout preview={preview}>
+          <Container>
+            <Header />
+            {router.isFallback ? (
+              <PostTitle>Loading…</PostTitle>
+            ) : (
+              <>
+                <article className="mb-32">
+                  <Head>
+                    <title>
+                      {post.title} | Next.js Blog Example with {CMS_NAME}
+                    </title>
+                    <meta property="og:image" content={post.ogImage.url} />
+                  </Head>
+                  <PostHeader
+                    title={post.title}
+                    coverImage={post.coverImage}
+                    date={post.date}
+                    author={post.author}
+                  />
+                  <PostBody content={post.content} />
+                </article>
+              </>
+            )}
+          </Container>
+        </Layout>
+      );
+    } else {
+      return (
+        <main className="text-center mt-72">
+          <div className="inline text-2xl mb-4">
+            Must be logged in to view premium post:
+          </div>
+          <button
+            className="ml-4 border-2 border-black px-2 mb-4 rounded-md mt-5 text-2xl font-light bg-black text-white"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <br />
+          <Link className="" href="/">
+            <a className="hover:underline text-xl text-gray-600">
+              Click here to go back to home page
+            </a>
+          </Link>
+        </main>
+      );
+    }
   }
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
@@ -95,6 +138,7 @@ export async function getStaticProps({ params }: Params) {
     "content",
     "ogImage",
     "coverImage",
+    "premium",
   ]);
   const content = await markdownToHtml(post.content || "");
 

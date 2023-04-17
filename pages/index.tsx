@@ -7,24 +7,32 @@ import { getAllPosts } from "../lib/api";
 import Head from "next/head";
 import { CMS_NAME } from "../lib/constants";
 import Post from "../types/post";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   allPosts: Post[];
 };
 
 const Index = ({ allPosts }: Props) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<string>("false");
+
   const heroPost = allPosts[0];
   const morePosts = allPosts.slice(1);
 
   useEffect(() => {
-    localStorage.clear();
-    console.log(localStorage.getItem("isLoggedIn"));
+    if (!localStorage.getItem("isLoggedIn")) {
+      localStorage.setItem("isLoggedIn", "false");
+    }
+
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") as string);
   }, []);
 
-  function handleLogin() {
-    console.log("clicked");
-    localStorage.setItem("isLoggedIn", "true");
+  function toggleLoginStatus() {
+    isLoggedIn === "false"
+      ? localStorage.setItem("isLoggedIn", "true")
+      : localStorage.setItem("isLoggedIn", "false");
+
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") as string);
   }
 
   return (
@@ -34,8 +42,10 @@ const Index = ({ allPosts }: Props) => {
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
-          <button onClick={handleLogin}>Login</button>
-          <Intro />
+          <Intro
+            toggleLoginStatus={toggleLoginStatus}
+            isLoggedIn={isLoggedIn}
+          />
           {heroPost && (
             <HeroPost
               title={heroPost.title}

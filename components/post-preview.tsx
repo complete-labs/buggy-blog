@@ -1,17 +1,18 @@
-import Avatar from './avatar'
-import DateFormatter from './date-formatter'
-import CoverImage from './cover-image'
-import Link from 'next/link'
-import Author from '../types/author'
+import Avatar from "./avatar";
+import DateFormatter from "./date-formatter";
+import CoverImage from "./cover-image";
+import Link from "next/link";
+import Author from "../types/author";
 
 type Props = {
-  title: string
-  coverImage: string
-  date: string
-  excerpt: string
-  author: Author
-  slug: string
-}
+  title: string;
+  coverImage: string;
+  date: string;
+  excerpt: string;
+  author: Author;
+  slug: string;
+  premium: boolean;
+};
 
 const PostPreview = ({
   title,
@@ -20,6 +21,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  premium,
 }: Props) => {
   return (
     <div>
@@ -30,6 +32,15 @@ const PostPreview = ({
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a className="hover:underline">{title}</a>
         </Link>
+        {premium ? (
+          <span className="bg-purple-200 rounded-md font-semibold text-lg text-purple-600 ml-4 inline align-middle py-1 px-1">
+            Premium
+          </span>
+        ) : (
+          <div className="bg-gray-300 rounded-md font-semibold text-lg text-black ml-4 inline align-middle py-1 px-1">
+            Free
+          </div>
+        )}
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
@@ -37,7 +48,7 @@ const PostPreview = ({
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />
     </div>
-  )
-}
+  );
+};
 
-export default PostPreview
+export default PostPreview;
