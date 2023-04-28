@@ -11,6 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  premium: boolean
 }
 
 const PostPreview = ({
@@ -20,6 +21,7 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  premium,
 }: Props) => {
   return (
     <div>
@@ -34,6 +36,8 @@ const PostPreview = ({
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />
       </div>
+        {premium && (
+        <div className="text-lg mb-4">Premium Post</div>)}
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />
     </div>

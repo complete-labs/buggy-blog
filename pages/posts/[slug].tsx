@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import {useLoginContext} from "../../lib/login";
+import Login from "../../components/login";
 
 type Props = {
   post: PostType
@@ -20,8 +22,12 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+  const { isLoggedIn } = useLoginContext()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+  }
+  if (!isLoggedIn) {
+    return <Login />
   }
   return (
     <Layout preview={preview}>
@@ -70,6 +76,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 
