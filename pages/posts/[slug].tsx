@@ -27,7 +27,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
     if (cookies['user'] === undefined && post.premium) {
       router.push({ pathname: "/login", query: { callbackURL: router.asPath } })
     }
-  })
+  }, [cookies])
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
