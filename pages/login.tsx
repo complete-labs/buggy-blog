@@ -14,7 +14,7 @@ const Login = () => {
         event.preventDefault()
         if (userName === 'Admin' && password === "admin123") {
             setErrorMsg("")
-            setCookie('user', userName, { path: '/' })
+            setCookie('user', userName, { path: '/', secure: process.env.NODE_ENV === 'production' })
             router.replace(callbackURL)
         }
         setErrorMsg("Invalid credentials!")
@@ -48,6 +48,7 @@ const Login = () => {
                         </div>
                         <div>
                             <button type="submit" className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                            <button onClick={() => router.replace("/")} className="flex w-full mt-4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Home</button>
                         </div>
                     </form>
                     <p className="mt-5 text-center">{errorMsg}</p>
@@ -57,6 +58,7 @@ const Login = () => {
                 <h2 className="mt-10 mb-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Welcome to the blog!</h2>
                 <div className="flex justify-center">
                     <button onClick={removeLoginCookie} className="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign out</button>
+                    <button onClick={() => router.replace("/")} className="flex ml-4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Home</button>
                 </div>
             </>}
     </div>

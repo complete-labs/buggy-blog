@@ -16,7 +16,7 @@ const LoginHeader = ({ callbackURL }: Props) => {
             setUserName(cookies['user'])
             setButtontext("Logout")
         }
-    })
+    }, [cookies])
     return <Link href={{ pathname: "/login", query: {callbackURL: callbackURL} }} as="/login">
         <a>
             <div className="flex justify-end pt-2 mb-2">
