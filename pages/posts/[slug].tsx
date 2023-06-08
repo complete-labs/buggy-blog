@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { useCookies } from 'react-cookie'
+import { useEffect } from 'react'
 
 type Props = {
   post: PostType
@@ -20,13 +22,19 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+  const [cookies] = useCookies(['user'])
+  useEffect(() => {
+    if (cookies['user'] === undefined && post.premium) {
+      router.push({ pathname: "/login", query: { callbackURL: router.asPath } })
+    }
+  })
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
   return (
     <Layout preview={preview}>
       <Container>
-        <Header />
+        <Header callbackURL={router.asPath} />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -43,6 +51,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                premium={post.premium}
               />
               <PostBody content={post.content} />
             </article>
@@ -70,6 +79,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 

@@ -7,11 +7,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "classnames": "2.3.1",
     "date-fns": "2.21.3",
     "gray-matter": "4.0.3",
     "next": "latest",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
     "remark": "13.0.0",
     "remark-html": "13.0.1",

@@ -9,14 +9,16 @@ type Props = {
   coverImage: string
   date: string
   author: Author
+  premium: number
 }
 
-const PostHeader = ({ title, coverImage, date, author }: Props) => {
+const PostHeader = ({ title, coverImage, date, author, premium }: Props) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>
       <div className="hidden md:block md:mb-12">
         <Avatar name={author.name} picture={author.picture} />
+        {premium == 1 && <p>Premium</p>}
       </div>
       <div className="mb-8 md:mb-16 sm:mx-0">
         <CoverImage title={title} src={coverImage} />
