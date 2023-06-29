@@ -3,9 +3,10 @@ import Post from '../types/post'
 
 type Props = {
   posts: Post[]
+  isAuthenticated?: string
 }
 
-const MoreStories = ({ posts }: Props) => {
+const MoreStories = ({ posts, isAuthenticated }: Props) => {
   return (
     <section>
       <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
@@ -21,6 +22,8 @@ const MoreStories = ({ posts }: Props) => {
             author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
+            level={post.level}
+            isAuthenticated={isAuthenticated}
           />
         ))}
       </div>

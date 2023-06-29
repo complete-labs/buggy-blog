@@ -10,7 +10,8 @@ type Props = {
   date: string
   excerpt: string
   author: Author
-  slug: string
+  slug: string,
+  isAuthenticated: string,
 }
 
 const HeroPost = ({
@@ -20,16 +21,18 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isAuthenticated
 }: Props) => {
+  const paywallPath = isAuthenticated == 'true' ? `/posts/${slug}` : `/paywall?post=${slug}`;
   return (
     <section>
       <div className="mb-8 md:mb-16">
-        <CoverImage title={title} src={coverImage} slug={slug} />
+        <CoverImage title={title} src={coverImage} slug={slug} isAuthenticated={isAuthenticated}/>
       </div>
       <div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28">
         <div>
           <h3 className="mb-4 text-4xl lg:text-6xl leading-tight">
-            <Link as={`/posts/${slug}`} href="/posts/[slug]">
+            <Link as={paywallPath} href={paywallPath}>
               <a className="hover:underline">{title}</a>
             </Link>
           </h3>

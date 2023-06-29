@@ -7,12 +7,15 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 type Props = {
-  allPosts: Post[]
+  allPosts: Post[],
 }
 
-const Index = ({ allPosts }: Props) => {
+const Index = ({ allPosts}: Props) => {
+  const cookies = parseCookies()
+  const isAuthenticated = cookies['isAuthenticated'] || 'false';
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
@@ -31,9 +34,10 @@ const Index = ({ allPosts }: Props) => {
               author={heroPost.author}
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
+              isAuthenticated={isAuthenticated}
             />
           )}
-          {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+          {morePosts.length > 0 && <MoreStories posts={morePosts} isAuthenticated={isAuthenticated} />}
         </Container>
       </Layout>
     </>
@@ -50,6 +54,7 @@ export const getStaticProps = async () => {
     'author',
     'coverImage',
     'excerpt',
+    'level',
   ])
 
   return {

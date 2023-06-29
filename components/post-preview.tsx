@@ -11,6 +11,8 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  level: string
+  isAuthenticated?: string
 }
 
 const PostPreview = ({
@@ -20,15 +22,19 @@ const PostPreview = ({
   excerpt,
   author,
   slug,
+  level,
+  isAuthenticated
 }: Props) => {
+  const paywallPath = isAuthenticated == 'true' ? `/posts/${slug}` : `/paywall?post=${slug}`;
+  const isPremium = level == 'premium' ? true : false;
   return (
     <div>
       <div className="mb-5">
-        <CoverImage slug={slug} title={title} src={coverImage} />
+        <CoverImage slug={slug} title={title} src={coverImage} isAuthenticated={isAuthenticated}/>
       </div>
       <h3 className="text-3xl mb-3 leading-snug">
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
-          <a className="hover:underline">{title}</a>
+        <Link as={paywallPath} href={paywallPath}>
+          <a className="hover:underline">{isPremium && 'Premium Content: '}{title}</a>
         </Link>
       </h3>
       <div className="text-lg mb-4">

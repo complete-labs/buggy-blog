@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 type Props = {
   post: PostType
@@ -22,6 +23,12 @@ const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
+  } else {
+    const cookies = parseCookies()
+    const isAuthenticated = cookies['isAuthenticated'] || 'false';
+    if (!isAuthenticated) {
+      router.push('/paywall');
+    }
   }
   return (
     <Layout preview={preview}>

@@ -5,9 +5,11 @@ type Props = {
   title: string
   src: string
   slug?: string
+  isAuthenticated?: string
 }
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage = ({ title, src, slug, isAuthenticated = 'false' }: Props) => {
+  const paywallPath = isAuthenticated == 'true' ? `/posts/${slug}` : `/paywall?post=${slug}`;
   const image = (
     <img
       src={src}
@@ -20,7 +22,7 @@ const CoverImage = ({ title, src, slug }: Props) => {
   return (
     <div className="sm:mx-0">
       {slug ? (
-        <Link as={`/posts/${slug}`} href="/posts/[slug]">
+        <Link as={paywallPath} href={paywallPath}>
           <a aria-label={title}>{image}</a>
         </Link>
       ) : (
