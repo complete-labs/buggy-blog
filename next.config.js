@@ -4,8 +4,8 @@
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    newNextLinkBehavior: false,
-  },
-};
+    newNextLinkBehavior: false
+  }
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

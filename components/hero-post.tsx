@@ -1,18 +1,18 @@
-import Avatar from "./avatar";
-import DateFormatter from "./date-formatter";
-import CoverImage from "./cover-image";
-import Author from "../types/author";
-import CustomLink from "./custom-link";
+import Avatar from './avatar'
+import DateFormatter from './date-formatter'
+import CoverImage from './cover-image'
+import Author from '../types/author'
+import CustomLink from './custom-link'
 
 type Props = {
-  title: string;
-  coverImage: string;
-  date: string;
-  excerpt: string;
-  author: Author;
-  slug: string;
-  premium?: boolean;
-};
+  title: string
+  coverImage: string
+  date: string
+  excerpt: string
+  author: Author
+  slug: string
+  premium?: boolean
+}
 
 const HeroPost = ({
   title,
@@ -21,7 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
-  premium,
+  premium
 }: Props) => {
   return (
     <section>
@@ -62,7 +62,7 @@ const HeroPost = ({
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default HeroPost;
+export default HeroPost

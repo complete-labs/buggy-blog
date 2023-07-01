@@ -1,15 +1,15 @@
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { signIn, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 type Props = {
-  href: string;
-  as: string;
-  className?: string;
-  children: React.ReactNode;
-  premium: boolean;
-  ariaLabel?: string;
-};
+  href: string
+  as: string
+  className?: string
+  children: React.ReactNode
+  premium: boolean
+  ariaLabel?: string
+}
 
 const CustomLink = ({
   as,
@@ -17,22 +17,22 @@ const CustomLink = ({
   children,
   premium,
   className,
-  ariaLabel,
+  ariaLabel
 }: Props) => {
-  const router = useRouter();
-  const session = useSession();
+  const router = useRouter()
+  const session = useSession()
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    event.preventDefault();
+    event.preventDefault()
     if (premium && !session.data) {
-      signIn(undefined, { callbackUrl: as });
-      return;
+      signIn(undefined, { callbackUrl: as })
+      return
     }
 
-    router.push(as);
-  };
+    router.push(as)
+  }
 
   return (
     <Link href={href} as={as}>
@@ -40,7 +40,7 @@ const CustomLink = ({
         {children}
       </a>
     </Link>
-  );
-};
+  )
+}
 
-export default CustomLink;
+export default CustomLink
