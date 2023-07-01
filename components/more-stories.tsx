@@ -1,9 +1,9 @@
-import PostPreview from './post-preview'
-import Post from '../types/post'
+import PostPreview from "./post-preview";
+import Post from "../types/post";
 
 type Props = {
-  posts: Post[]
-}
+  posts: Post[];
+};
 
 const MoreStories = ({ posts }: Props) => {
   return (
@@ -15,6 +15,7 @@ const MoreStories = ({ posts }: Props) => {
         {posts.map((post) => (
           <PostPreview
             key={post.slug}
+            premium={post.premium}
             title={post.title}
             coverImage={post.coverImage}
             date={post.date}
@@ -25,7 +26,7 @@ const MoreStories = ({ posts }: Props) => {
         ))}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default MoreStories
+export default MoreStories;

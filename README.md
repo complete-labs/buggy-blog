@@ -39,3 +39,28 @@ Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&ut
 This blog-starter-typescript uses [Tailwind CSS](https://tailwindcss.com). To control the generated stylesheet's filesize, this example uses Tailwind CSS' v2.0 [`purge` option](https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css) to remove unused CSS.
 
 [Tailwind CSS v2.0 no longer supports Node.js 8 or 10](https://tailwindcss.com/docs/upgrading-to-v2#upgrade-to-node-js-12-13-or-higher). To build your CSS you'll need to ensure you are running Node.js 12.13.0 or higher in both your local and CI environments.
+
+## Features
+
+- [x] A [post's markdown metadata](https://github.com/polar-bear-labs/next.js/blob/canary/examples/blog-starter-typescript/_posts/preview.md?plain=1#L2) should be used to indicate whether it is a premium article.
+- [x] All posts should be listed on the home page of the application, even if they are premium. There should be some small indicator as to whether or not the article is premium.
+- [x] When a user clicks on or directly navigates to a premium article via link, they should be prompted to log in. If the user is already logged in, the article should be rendered as normal.
+- [x] The login method need not be secure. You are welcome to hardcode a single username/password into the frontend. The logged-in state of a user should be managed via cookies.
+
+## Login Credentials: please check
+
+```bash
+ Next Auth login credentials:
+ username: admin
+ password: password
+
+ **/pages/api/auth/[...nextauth].ts** for implementation
+```
+
+## Next.js Blog Example with Markdown - 1 July 2023 - Watch Video
+
+<a href="https://www.loom.com/share/386d94879de5441ea23587eb5be24fdb">
+
+  <p>Next.js Blog Example with Markdown - 1 July 2023 - Watch Video</p>
+  <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/386d94879de5441ea23587eb5be24fdb-with-play.gif">
+  </a>
