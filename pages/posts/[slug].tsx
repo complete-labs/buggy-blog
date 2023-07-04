@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
+import { useSession, signIn } from 'next-auth/react'
+import { useEffect } from 'react'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
 import Header from '../../components/header'
@@ -20,6 +22,15 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+  const { status } = useSession()
+
+  useEffect(() => {
+    if (post?.premium && status === 'unauthenticated') {
+      // Forces a sign-in if you are on the page unauthed.
+      signIn();
+    }
+  }, [status])
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
@@ -70,6 +81,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 
