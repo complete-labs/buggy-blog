@@ -1,4 +1,4 @@
-import Author from './author'
+import Author from "./author"
 
 type PostType = {
   slug: string
@@ -11,6 +11,7 @@ type PostType = {
     url: string
   }
   content: string
+  premium: boolean
 }
 
 export default PostType
