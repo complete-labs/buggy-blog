@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import AuthenticateArticleRoute from './authenticate-article-route'
 
 type Props = {
   post: PostType
@@ -30,7 +31,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
-          <>
+          <AuthenticateArticleRoute isPremiumContent = {post.isPremium}>
             <article className="mb-32">
               <Head>
                 <title>
@@ -46,7 +47,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
               />
               <PostBody content={post.content} />
             </article>
-          </>
+          </AuthenticateArticleRoute>
         )}
       </Container>
     </Layout>
@@ -70,6 +71,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'isPremium',
   ])
   const content = await markdownToHtml(post.content || '')
 
