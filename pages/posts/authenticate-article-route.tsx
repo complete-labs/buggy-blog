@@ -1,3 +1,4 @@
+// this component will check on initial load if the user is logged in incase the content `isPremium` otherwise the normal blog is rendered.
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
