@@ -4,6 +4,7 @@ import CoverImage from "./cover-image";
 import Link from "next/link";
 import cn from "classnames";
 import Author from "../types/author";
+import { useSession } from "next-auth/react";
 
 type Props = {
   title: string;
@@ -24,6 +25,7 @@ const PostPreview = ({
   slug,
   premium,
 }: Props) => {
+  const { data: session } = useSession();
   return (
     <div className="relative">
       {premium && (
@@ -31,7 +33,7 @@ const PostPreview = ({
           <div className="bg-purple-700 text-white px-2 py-1">Premium</div>
         </div>
       )}
-      <div className={cn({ "filter blur-sm": premium })}>
+      <div className={cn({ "filter blur-sm": premium && !session })}>
         <div className="mb-5">
           <CoverImage slug={slug} title={title} src={coverImage} />
         </div>
