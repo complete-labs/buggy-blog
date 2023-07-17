@@ -7,9 +7,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.0",
     "classnames": "2.3.1",
     "date-fns": "2.21.3",
     "gray-matter": "4.0.3",
+    "mui": "^0.0.1",
     "next": "latest",
     "next-auth": "^4.22.1",
     "react": "^17.0.2",

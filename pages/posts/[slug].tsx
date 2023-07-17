@@ -13,6 +13,7 @@ import markdownToHtml from "../../lib/markdownToHtml";
 import PostType from "../../types/post";
 import cn from "classnames";
 import { useSession, signIn } from "next-auth/react";
+import PromptModal from "../../components/modal";
 
 type Props = {
   post: PostType;
@@ -30,43 +31,57 @@ const Post = ({ post, morePosts, preview }: Props) => {
   return (
     <Layout preview={preview}>
       <Container>
-        {!session && post.premium && (
+        {!session && post.premium ? (
           <div className="text-center">
-            <p className="text-2xl text-purple-700 font-bold">
-              You must be logged in to view this content
-            </p>
-            <button
-              className="h-16 mt-4 w-32 border-2 border-purple-700 rounded-sm font-bold"
-              onClick={() => signIn()}
-            >
-              Sign In
-            </button>
+            <PromptModal />
+            <Header />
+            {router.isFallback ? (
+              <PostTitle>Loading…</PostTitle>
+            ) : (
+              <>
+                <article className="mb-32">
+                  <Head>
+                    <title>
+                      {post.title} | Next.js Blog Example with {CMS_NAME}
+                    </title>
+                    <meta property="og:image" content={post.ogImage.url} />
+                  </Head>
+                  <PostHeader
+                    title={post.title}
+                    coverImage={post.coverImage}
+                    date={post.date}
+                    author={post.author}
+                  />
+                </article>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className={cn({ "filter blur-md": post.premium && !session })}>
+            <Header />
+            {router.isFallback ? (
+              <PostTitle>Loading…</PostTitle>
+            ) : (
+              <>
+                <article className="mb-32">
+                  <Head>
+                    <title>
+                      {post.title} | Next.js Blog Example with {CMS_NAME}
+                    </title>
+                    <meta property="og:image" content={post.ogImage.url} />
+                  </Head>
+                  <PostHeader
+                    title={post.title}
+                    coverImage={post.coverImage}
+                    date={post.date}
+                    author={post.author}
+                  />
+                  <PostBody content={post.content} />
+                </article>
+              </>
+            )}
           </div>
         )}
-        <div className={cn({ "filter blur-md": post.premium && !session })}>
-          <Header />
-          {router.isFallback ? (
-            <PostTitle>Loading…</PostTitle>
-          ) : (
-            <>
-              <article className="mb-32">
-                <Head>
-                  <title>
-                    {post.title} | Next.js Blog Example with {CMS_NAME}
-                  </title>
-                  <meta property="og:image" content={post.ogImage.url} />
-                </Head>
-                <PostHeader
-                  title={post.title}
-                  coverImage={post.coverImage}
-                  date={post.date}
-                  author={post.author}
-                />
-                <PostBody content={post.content} />
-              </article>
-            </>
-          )}
-        </div>
       </Container>
     </Layout>
   );
