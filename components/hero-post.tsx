@@ -3,6 +3,7 @@ import DateFormatter from './date-formatter'
 import CoverImage from './cover-image'
 import Link from 'next/link'
 import Author from '../types/author'
+import PostPremiumFlag from './post-premium-flag'
 
 type Props = {
   title: string
@@ -11,6 +12,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  premium: boolean
 }
 
 const HeroPost = ({
@@ -20,6 +22,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  premium,
 }: Props) => {
   return (
     <section>
@@ -33,6 +36,9 @@ const HeroPost = ({
               <a className="hover:underline">{title}</a>
             </Link>
           </h3>
+          <div className="text-lg">
+            {premium && <PostPremiumFlag />}
+          </div>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
           </div>
