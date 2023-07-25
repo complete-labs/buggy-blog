@@ -35,6 +35,24 @@ const Post = ({ post, morePosts, preview }: Props) => {
     }
   }, [authorized])
 
+  // Ensures the user can scroll when navigating back on
+  // a premium post when a user is not logged in
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      if (as !== router.asPath) {
+        const body = document.querySelector("body")
+        if (body) {
+          body.style.overflow = "auto"
+        }
+      }
+      return true
+    })
+
+    return () => {
+      router.beforePopState(() => true)
+    }
+  }, [router])
+
   const onLogin = () => {
     setAuthorized(true)
   }
