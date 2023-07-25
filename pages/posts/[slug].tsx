@@ -14,9 +14,7 @@ import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
 import { authorizeService } from '../../utils/authorize-service'
-import LoginFormEvent from '../../types/login-form-event'
 import LoginModal from '../../components/login-modal'
-import { loginService } from '../../utils/login-service'
 
 type Props = {
   post: PostType
@@ -24,10 +22,11 @@ type Props = {
   preview?: boolean
 }
 
+const MODAL_TEXT = 'Sign in to view this premium article.'
+
 const Post = ({ post, morePosts, preview }: Props) => {
-  const [error, setError] = useState<string>()
   const router = useRouter()
-  const authorized = authorizeService() || !post.premium
+  const [authorized, setAuthorized] = useState<boolean>(authorizeService() || !post.premium)
 
   useEffect(() => {
     const body = document.querySelector("body")
@@ -36,15 +35,8 @@ const Post = ({ post, morePosts, preview }: Props) => {
     }
   }, [authorized])
 
-  const onSubmit = (e: LoginFormEvent) => {
-    e.preventDefault()
-    setError(undefined)
-
-    try {
-      loginService(e.target.username.value, e.target.password.value)
-    } catch (err) {
-      setError((err as Error).message)
-    }
+  const onLogin = () => {
+    setAuthorized(true)
   }
 
   if (!router.isFallback && !post?.slug) {
@@ -60,7 +52,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
           <>
               <article className={cn('mb-32', {
                 'filter blur-sm': !authorized
-      })}>
+              })}>
               <Head>
                 <title>
                   {post.title} | Next.js Blog Example with {CMS_NAME}
@@ -77,7 +69,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
             </article>
           </>
         )}
-        {!authorized && <LoginModal errorMessage={error} onSubmit={onSubmit} />}
+        {!authorized && <LoginModal title={MODAL_TEXT} onLogin={onLogin}/>}
       </Container>
     </Layout>
   )
