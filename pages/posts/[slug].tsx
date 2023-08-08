@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import UserAuthenticatedHOC from '../../components/userAuthenticatedHOC'
 
 type Props = {
   post: PostType
@@ -24,6 +25,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
     return <ErrorPage statusCode={404} />
   }
   return (
+    <UserAuthenticatedHOC freeToView={post.freeToView}>
     <Layout preview={preview}>
       <Container>
         <Header />
@@ -43,6 +45,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                freeToView={post.freeToView}
               />
               <PostBody content={post.content} />
             </article>
@@ -50,6 +53,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
         )}
       </Container>
     </Layout>
+    </UserAuthenticatedHOC>
   )
 }
 
@@ -70,6 +74,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'freeToView'
   ])
   const content = await markdownToHtml(post.content || '')
 

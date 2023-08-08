@@ -11,6 +11,7 @@ type PostType = {
     url: string
   }
   content: string
+  freeToView: boolean
 }
 
 export default PostType

@@ -5,9 +5,10 @@ type Props = {
   title: string
   src: string
   slug?: string
+  freeToView: boolean
 }
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage = ({ title, src, slug, freeToView }: Props) => {
   const image = (
     <img
       src={src}
@@ -19,6 +20,7 @@ const CoverImage = ({ title, src, slug }: Props) => {
   )
   return (
     <div className="sm:mx-0">
+      { !freeToView && (<p className='bg-black text-white px-1' >Premium Content</p>)}
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>{image}</a>

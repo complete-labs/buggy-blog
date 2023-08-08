@@ -9,9 +9,10 @@ type Props = {
   coverImage: string
   date: string
   author: Author
+  freeToView: boolean
 }
 
-const PostHeader = ({ title, coverImage, date, author }: Props) => {
+const PostHeader = ({ title, coverImage, date, author, freeToView }: Props) => {
   return (
     <>
       <PostTitle>{title}</PostTitle>
@@ -19,7 +20,7 @@ const PostHeader = ({ title, coverImage, date, author }: Props) => {
         <Avatar name={author.name} picture={author.picture} />
       </div>
       <div className="mb-8 md:mb-16 sm:mx-0">
-        <CoverImage title={title} src={coverImage} />
+        <CoverImage title={title} src={coverImage} freeToView={freeToView} />
       </div>
       <div className="max-w-2xl mx-auto">
         <div className="block md:hidden mb-6">
