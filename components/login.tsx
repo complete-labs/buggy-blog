@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser } from '../pages/UserContext';
+import { useUser } from '../lib/UserContext';
 
 const Login = () => {
   const { setUser } = useUser();

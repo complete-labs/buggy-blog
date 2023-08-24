@@ -1,5 +1,5 @@
 import React from 'react';
-import { useUser } from '../pages/UserContext'; 
+import { useUser } from '../lib/UserContext'; 
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router'; 
 
