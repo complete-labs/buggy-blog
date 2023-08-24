@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import { useUser } from '../UserContext'
+import Login from '../../components/login'
 
 type Props = {
   post: PostType
@@ -20,9 +22,16 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const router = useRouter()
+  const { user } = useUser();
+
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  if (post?.premium=='true' && !user.isAuthenticated) {
+    return <Login />;
+  }
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -43,6 +52,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 coverImage={post.coverImage}
                 date={post.date}
                 author={post.author}
+                premium={post.premium}
               />
               <PostBody content={post.content} />
             </article>
@@ -70,6 +80,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium'
   ])
   const content = await markdownToHtml(post.content || '')
 
