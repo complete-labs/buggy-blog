@@ -7,6 +7,7 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
+import Cookie from 'js-cookie'
 
 type Props = {
   allPosts: Post[]
@@ -22,6 +23,7 @@ const Index = ({ allPosts }: Props) => {
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
+          <button onClick={() => Cookie.set('isLoggedIn', undefined)}>Log out</button>
           <Intro />
           {heroPost && (
             <HeroPost
@@ -50,6 +52,7 @@ export const getStaticProps = async () => {
     'author',
     'coverImage',
     'excerpt',
+    'isPremium'
   ])
 
   return {

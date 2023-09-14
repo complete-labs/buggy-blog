@@ -5,9 +5,10 @@ type Props = {
   title: string
   src: string
   slug?: string
+  isPremium: boolean
 }
 
-const CoverImage = ({ title, src, slug }: Props) => {
+const CoverImage = ({ title, src, slug, isPremium }: Props) => {
   const image = (
     <img
       src={src}
@@ -17,14 +18,18 @@ const CoverImage = ({ title, src, slug }: Props) => {
       })}
     />
   )
+
   return (
-    <div className="sm:mx-0">
+    <div className="sm:mx-0" style={{ position: 'relative' }}>
       {slug ? (
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a aria-label={title}>{image}</a>
         </Link>
       ) : (
         image
+      )}
+      {isPremium && (
+        <span style={{ position: 'absolute', top: 4, left: 4, color: 'darkorange' }}>Premium</span>
       )}
     </div>
   )
