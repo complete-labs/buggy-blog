@@ -16,7 +16,7 @@ const Alert = () => {
             className='bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 rounded' 
             onClick={toggleLoggedIn}
           >
-            Click Here to Log In
+            Toggle Log In
           </button> 
         </div>
       </Container>
