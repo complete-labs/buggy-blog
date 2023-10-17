@@ -1,16 +1,24 @@
+import { useLoggedInContext } from './authContext'
+import LoginPrompt from './login-prompt'
 import markdownStyles from './markdown-styles.module.css'
 
 type Props = {
   content: string
+  premium?: boolean
 }
 
-const PostBody = ({ content }: Props) => {
+const PostBody = ({ content, premium }: Props) => {
+    const { isLoggedIn } = useLoggedInContext();
+
   return (
     <div className="max-w-2xl mx-auto">
-      <div
-        className={markdownStyles['markdown']}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+      {(premium && !isLoggedIn) 
+        ? <LoginPrompt /> 
+        : (<div
+            className={markdownStyles['markdown']}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />)
+      }
     </div>
   )
 }
