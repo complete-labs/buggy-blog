@@ -1,4 +1,5 @@
 import Alert from './alert'
+import { AuthContext } from './authContext'
 import Footer from './footer'
 import Meta from './meta'
 
@@ -9,14 +10,14 @@ type Props = {
 
 const Layout = ({ preview, children }: Props) => {
   return (
-    <>
+    <AuthContext>
       <Meta />
       <div className="min-h-screen">
-        <Alert preview={preview} />
+        <Alert />
         <main>{children}</main>
       </div>
       <Footer />
-    </>
+    </AuthContext>
   )
 }
 
