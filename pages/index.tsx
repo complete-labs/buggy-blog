@@ -7,12 +7,13 @@ import { getAllPosts } from '../lib/api'
 import Head from 'next/head'
 import { CMS_NAME } from '../lib/constants'
 import Post from '../types/post'
+import React from 'react';
 
 type Props = {
   allPosts: Post[]
 }
 
-const Index = ({ allPosts }: Props) => {
+function Index({ allPosts }: Props) {
   const heroPost = allPosts[0]
   const morePosts = allPosts.slice(1)
   return (
@@ -31,6 +32,7 @@ const Index = ({ allPosts }: Props) => {
               author={heroPost.author}
               slug={heroPost.slug}
               excerpt={heroPost.excerpt}
+              premium={heroPost.premium}
             />
           )}
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
@@ -50,6 +52,7 @@ export const getStaticProps = async () => {
     'author',
     'coverImage',
     'excerpt',
+    'premium',
   ])
 
   return {
