@@ -12,4 +12,8 @@
 @tailwind utilities;
 /* Stop purging. */
 
-/* Your own custom utilities */
+.overlay-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
