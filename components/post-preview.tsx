@@ -11,10 +11,12 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
+  isPremium: string
 }
 
 const PostPreview = ({
   title,
+  isPremium,
   coverImage,
   date,
   excerpt,
@@ -30,6 +32,13 @@ const PostPreview = ({
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a className="hover:underline">{title}</a>
         </Link>
+          { isPremium == 'True' &&
+              <div>
+                  <span style={{color: 'goldenrod'}}>
+                    <i className="fa fa-star"></i> Premium Article
+                  </span>
+              </div>
+          }
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter dateString={date} />

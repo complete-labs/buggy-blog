@@ -10,6 +10,7 @@ type Props = {
   date: string
   excerpt: string
   author: Author
+  isPremium: string
   slug: string
 }
 
@@ -20,6 +21,7 @@ const HeroPost = ({
   excerpt,
   author,
   slug,
+  isPremium
 }: Props) => {
   return (
     <section>
@@ -32,6 +34,13 @@ const HeroPost = ({
             <Link as={`/posts/${slug}`} href="/posts/[slug]">
               <a className="hover:underline">{title}</a>
             </Link>
+            { isPremium == 'True' &&
+                <div>
+                  <span style={{color: 'goldenrod'}}>
+                    <i className="fa fa-star"></i> Premium Article
+                  </span>
+                </div>
+            }
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
             <DateFormatter dateString={date} />
