@@ -8,11 +8,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
-    "@mantine/core": "6.0.21",
-    "@mantine/form": "6.0.21",
-    "@mantine/hooks": "6.0.21",
-    "@mantine/modals": "6.0.21",
-    "@mantine/notifications": "6.0.21",
+    "@headlessui/react": "^1.7.17",
     "@types/jsonwebtoken": "^9.0.4",
     "classnames": "2.3.1",
     "cookies-next": "^4.0.0",

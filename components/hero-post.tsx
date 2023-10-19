@@ -1,10 +1,12 @@
-import { FaLock } from "react-icons/fa";
-import Avatar from "./avatar";
-import DateFormatter from "./date-formatter";
-import CoverImage from "./cover-image";
-import Link from "next/link";
-import Author from "../types/author";
-import PremiumArticleBadge from "./premium-badge";
+import Avatar from './avatar';
+import DateFormatter from './date-formatter';
+import CoverImage from './cover-image';
+import Link from 'next/link';
+import Author from '../types/author';
+import PremiumArticleBadge from './premium-badge';
+import { useSession } from '../context/SessionProvider';
+import { useState } from 'react';
+import LoginModal from './login';
 
 type Props = {
   title: string;
@@ -25,9 +27,52 @@ const HeroPost = ({
   slug,
   premium,
 }: Props) => {
+  const { session } = useSession();
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [loginModalIsOpened, setLoginModalIsOpened] = useState(false);
+
   return (
-    <section>
+    <section
+      className={`${
+        !session.loggedIn &&
+        showOverlay &&
+        // 'opacity-100 hover:opacity-70 cursor-not-allowed'
+        'cursor-not-allowed relative'
+      }`}
+      onMouseEnter={() => {
+        setShowOverlay(true);
+      }}
+      onMouseLeave={() => {
+        setShowOverlay(false);
+      }}
+    >
       <div className={`mb-8 md:mb-16`}>
+        <LoginModal
+          opened={loginModalIsOpened}
+          setOpen={setLoginModalIsOpened}
+        />
+        {/* show overlay if we're supposed to (if it's premium and is hovered on) AND if user ISNT logged in */}
+        {premium && showOverlay && !session.loggedIn && (
+          <div
+            className="absolute flex items-center	justify-center flex-col"
+            style={{
+              height: '100%',
+              width: '100%',
+              background: 'rgb(0,0,0,0.6)',
+            }}
+          >
+            <p className="text-4xl font-bold text-white">Premium Article</p>
+            <button
+              onClick={() => {
+                setLoginModalIsOpened(true);
+              }}
+              type="button"
+              className="btn-primary mt-5"
+            >
+              Log in to view
+            </button>
+          </div>
+        )}
         <CoverImage
           premium={premium}
           title={title}

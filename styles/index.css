@@ -6,14 +6,15 @@
 @tailwind components;
 /* Stop purging. */
 
+@layer components {
+  .btn-primary {
+    @apply py-2 px-4 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75;
+  }
+}
+
 /* Write you own custom component styles here */
 
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */
 
-.overlay-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
