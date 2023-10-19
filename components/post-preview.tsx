@@ -11,7 +11,7 @@ type Props = {
   excerpt: string
   author: Author
   slug: string
-  isPremium: string
+  isPremium: boolean
 }
 
 const PostPreview = ({
@@ -32,7 +32,7 @@ const PostPreview = ({
         <Link as={`/posts/${slug}`} href="/posts/[slug]">
           <a className="hover:underline">{title}</a>
         </Link>
-          { isPremium == 'True' &&
+          { isPremium &&
               <div>
                   <span style={{color: 'goldenrod'}}>
                     <i className="fa fa-star"></i> Premium Article

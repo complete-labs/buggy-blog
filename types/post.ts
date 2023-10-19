@@ -11,7 +11,7 @@ type PostType = {
     url: string
   }
   content: string
-  isPremium: string
+  isPremium: boolean
 }
 
 export default PostType

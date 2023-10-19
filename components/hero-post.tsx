@@ -10,7 +10,7 @@ type Props = {
   date: string
   excerpt: string
   author: Author
-  isPremium: string
+  isPremium: boolean
   slug: string
 }
 
@@ -34,7 +34,7 @@ const HeroPost = ({
             <Link as={`/posts/${slug}`} href="/posts/[slug]">
               <a className="hover:underline">{title}</a>
             </Link>
-            { isPremium == 'True' &&
+            { isPremium &&
                 <div>
                   <span style={{color: 'goldenrod'}}>
                     <i className="fa fa-star"></i> Premium Article

@@ -31,7 +31,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
 
   useEffect(() => {
     const isUserSignedIn = document.cookie.indexOf('username=admin') >= 0;
-    if (post.isPremium === 'True' && !isUserSignedIn) {
+    if (post.isPremium && !isUserSignedIn) {
       const paywallElement = document.getElementById("paywall");
       if (paywallElement) {
         paywallElement.style.display = "flex";
