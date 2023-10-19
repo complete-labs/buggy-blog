@@ -6,6 +6,7 @@ import Author from '../types/author';
 import PremiumArticleBadge from './premium-badge';
 import { useSession } from '../context/SessionProvider';
 import { useState } from 'react';
+import LoginModal from './login';
 
 type Props = {
   title: string;
@@ -42,6 +43,7 @@ const PostPreview = ({
         setShowOverlay(false);
       }}
     >
+      <LoginModal opened={loginModalIsOpened} setOpen={setLoginModalIsOpened} />
       <div className={`mb-5`}>
         {/* it's a premium article, and we're overing over it, and we're not logged in, so show overlay */}
         {premium && showOverlay && !session.loggedIn && (
