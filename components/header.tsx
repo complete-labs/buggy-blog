@@ -1,7 +1,6 @@
 import Link from 'next/link'
-import SignInModal from "./sign-in";
-import ModalWrapper from "./modal-wrapper";
 import {useEffect, useState} from "react";
+import AuthButtonGroup from "./auth-button-group";
 
 type Props = {
     signedIn: boolean
@@ -36,17 +35,13 @@ const Header = ({ signedIn }: Props) => {
               </Link>
               .
           </h2>
-          {showSignInButton ? (
-              <button id="sign-in-button" className="px-4 py-2 text-xl font-semibold rounded" onClick={toggleSignInModal}>Sign In</button>
-          ) : (
-              <button id="sign-out-button" className="px-4 py-2 text-xl font-semibold rounded" onClick={handleSignOut}>Sign Out</button>
-          )}
-
-          {showSignInModal &&
-              <ModalWrapper>
-                  <SignInModal onSuccessfulSignIn={handleSuccessfulSignIn} />
-              </ModalWrapper>
-          }
+          <AuthButtonGroup
+              showSignInModal={showSignInModal}
+              showSignInButton={showSignInButton}
+              toggleSignInModal={toggleSignInModal}
+              handleSuccessfulSignIn={handleSuccessfulSignIn}
+              handleSignOut={handleSignOut}
+          />
       </div>
   )
 }

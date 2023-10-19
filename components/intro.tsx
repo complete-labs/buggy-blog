@@ -1,7 +1,6 @@
 import {CMS_NAME} from "../lib/constants";
-import SignInModal from "./sign-in";
-import ModalWrapper from "./modal-wrapper";
 import {useEffect, useState} from "react";
+import AuthButtonGroup from "./auth-button-group";
 
 const Intro = () => {
     const [showSignInModal, setShowSignInModal] = useState(false);
@@ -30,16 +29,13 @@ const Intro = () => {
             <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
                 Blog.
             </h1>
-            {showSignInButton ? (
-                <button className="px-4 py-2 text-xl font-semibold rounded" onClick={toggleSignInModal}>Sign In</button>
-            ) : (
-                <button className="px-4 py-2 text-xl font-semibold rounded" onClick={handleSignOut}>Sign Out</button>
-            )}
-            {showSignInModal &&
-                <ModalWrapper>
-                    <SignInModal onSuccessfulSignIn={handleSuccessfulSignIn} />
-                </ModalWrapper>
-            }
+            <AuthButtonGroup
+                showSignInModal={showSignInModal}
+                showSignInButton={showSignInButton}
+                toggleSignInModal={toggleSignInModal}
+                handleSuccessfulSignIn={handleSuccessfulSignIn}
+                handleSignOut={handleSignOut}
+            />
             <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
                 A statically generated blog example using{' '}
                 <a
