@@ -30,16 +30,29 @@ const Post = ({ post, morePosts, preview }: Props) => {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const isUserSignedIn = document.cookie.indexOf('username=admin') >= 0;
-    if (post.isPremium && !isUserSignedIn) {
+    const checkSignInStatus = () => {
+      const isUserSignedIn = document.cookie.indexOf('username=admin') >= 0;
+      setIsSignedIn(isUserSignedIn);
+
       const paywallElement = document.getElementById("paywall");
       if (paywallElement) {
-        paywallElement.style.display = "flex";
+        if (post.isPremium && !isUserSignedIn) {
+          paywallElement.style.display = "flex";
+        } else {
+          paywallElement.style.display = "none";
+        }
       }
+
       if (blurContainerRef.current) {
-        blurContainerRef.current.style.filter = "blur(8px)";
+        blurContainerRef.current.style.filter = post.isPremium && !isUserSignedIn ? "blur(8px)" : "none";
       }
-    }
+    };
+
+    checkSignInStatus();
+    const intervalId = setInterval(checkSignInStatus, 1000); // Check every second, for example
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [post.isPremium]);
 
   const toggleSignInModal = () => {
