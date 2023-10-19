@@ -1,3 +1,4 @@
+import { useForm, SubmitHandler } from 'react-hook-form';
 import {
   Dispatch,
   FormEvent,
@@ -9,6 +10,11 @@ import {
 import { Dialog, Transition } from '@headlessui/react';
 import { useSession } from '../context/SessionProvider';
 
+type Inputs = {
+  email: string;
+  password: string;
+};
+
 const LoginModal = ({
   opened,
   setOpen,
@@ -16,44 +22,35 @@ const LoginModal = ({
   opened: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Inputs>();
+
   const { setSession } = useSession();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [errors, setErrors] = useState({ email: '', password: '' });
 
-  const handleLoginFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // email form validation
-    if (!/^\S+@\S+$/.test(email)) {
-      setErrors({
-        email: 'Invalid email',
-        password: errors.password,
-      });
-      return;
-    }
-    // password validation
-    if (password.replaceAll(' ', '').length < 6) {
-      setErrors({
-        password: 'Password must be at least 6 characters',
-        email: errors.password,
-      });
-      return;
-    }
-
+  const handleLoginFormSubmit: SubmitHandler<Inputs> = async ({
+    email,
+    password,
+  }) => {
     const login = await fetch(`/api/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
-    // if there were errors logging in, we check !loginResponse.success and loginResponse.message
-    // for this case, we assume it's always going to pass so we destructure
-    const { jwt } = await login.json();
-
-    // jwt was stored in cookies in our API endpoint (for subsequent requests' auth), so here we just set our loggedIn state
-    setSession({ loggedIn: !!jwt });
-    // reset form validation errors
-    setErrors({ email: '', password: '' });
-    setOpen(false);
+    // if there were errors logging in, we check response for `success: false` and a `message` field to indicate what the error was
+    // for this case, we assume it's always going to pass so we immediately destructure
+    const { jwt, success, message } = await login.json();
+    if (success) {
+      // jwt was stored in cookies in our API endpoint (for subsequent requests' auth), so here we just set our jwt state to check auth state
+      setSession({ jwt });
+      // close modal and reset form
+      reset();
+      setOpen(false);
+      return;
+    }
+    return alert(`Error occurred when logging in: ${message}`);
   };
 
   return (
@@ -103,7 +100,7 @@ const LoginModal = ({
                       </div>
 
                       <form
-                        onSubmit={handleLoginFormSubmit}
+                        onSubmit={handleSubmit(handleLoginFormSubmit)}
                         className="text-left"
                       >
                         <label
@@ -113,14 +110,21 @@ const LoginModal = ({
                           Email
                         </label>
                         <input
-                          required
-                          onChange={(e) => setEmail(e.currentTarget.value)}
+                          {...register('email', {
+                            required: true,
+                            pattern: {
+                              value: /^\S+@\S+$/,
+                              message: 'Invalid email address',
+                            },
+                          })}
                           type="text"
                           id="email"
                           placeholder="e.g. joe@gmail.com"
                           className="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        <p className="text-red-600 text-xs">{errors.email}</p>
+                        {errors.email && (
+                          <p className="text-red-600 text-xs">Invalid email</p>
+                        )}
                         <label
                           htmlFor="password"
                           className="block text-sm font-medium leading-6 text-gray-900 mt-1"
@@ -128,16 +132,20 @@ const LoginModal = ({
                           Password
                         </label>
                         <input
-                          required
-                          onChange={(e) => setPassword(e.currentTarget.value)}
+                          {...register('password', {
+                            required: true,
+                            minLength: 6,
+                          })}
                           type="password"
                           id="password"
                           placeholder="e.g. Secret123!"
                           className="block w-full rounded-md border-0 py-1.5 pl-2 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-0 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        <p className="text-red-600 text-xs">
-                          {errors.password}
-                        </p>
+                        {errors.password && (
+                          <p className="text-red-600 text-xs">
+                            Password must be at least 6 characters
+                          </p>
+                        )}
                         <button
                           type="submit"
                           className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 w-full mt-3"

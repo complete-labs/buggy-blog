@@ -10,27 +10,28 @@ import {
 
 // create the type for our context with setSession so we can set alter auth state throughout our app
 type SessionContextType = {
-  session: { loggedIn: boolean };
+  session: { jwt: string | undefined };
   setSession: React.Dispatch<
     React.SetStateAction<{
-      loggedIn: boolean;
+      jwt: string | undefined;
     }>
   >;
 };
 
+// our jwt will be undefined if we retrieve our cookie when it's empty
 export const SessionContext = createContext<SessionContextType>({
-  session: { loggedIn: false },
+  session: { jwt: undefined },
   setSession: () => {},
 });
 
 // gets jwt from cookies and specifies if user is logged in
 export const getSession = (): {
-  loggedIn: boolean;
+  jwt: string | undefined;
 } => {
   const jwt = getCookie('jwt');
 
   // force to `true` if it exists and `false` otherwise
-  return { loggedIn: !!jwt };
+  return { jwt: jwt as string | undefined };
 };
 
 // a hook to use in our components

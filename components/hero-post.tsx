@@ -34,10 +34,7 @@ const HeroPost = ({
   return (
     <section
       className={`${
-        !session.loggedIn &&
-        showOverlay &&
-        // 'opacity-100 hover:opacity-70 cursor-not-allowed'
-        'cursor-not-allowed relative'
+        !session.jwt && showOverlay && premium && 'cursor-not-allowed relative'
       }`}
       onMouseEnter={() => {
         setShowOverlay(true);
@@ -52,7 +49,7 @@ const HeroPost = ({
           setOpen={setLoginModalIsOpened}
         />
         {/* show overlay if we're supposed to (if it's premium and is hovered on) AND if user ISNT logged in */}
-        {premium && showOverlay && !session.loggedIn && (
+        {premium && showOverlay && !session.jwt && (
           <div
             className="absolute flex items-center	justify-center flex-col"
             style={{
@@ -73,6 +70,7 @@ const HeroPost = ({
             </button>
           </div>
         )}
+
         <CoverImage
           premium={premium}
           title={title}

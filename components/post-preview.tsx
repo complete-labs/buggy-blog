@@ -34,7 +34,7 @@ const PostPreview = ({
   return (
     <div
       className={`${
-        !session.loggedIn && showOverlay && 'cursor-not-allowed relative'
+        premium && !session.jwt && showOverlay && 'cursor-not-allowed relative'
       }`}
       onMouseEnter={() => {
         setShowOverlay(true);
@@ -46,7 +46,7 @@ const PostPreview = ({
       <LoginModal opened={loginModalIsOpened} setOpen={setLoginModalIsOpened} />
       <div className={`mb-5`}>
         {/* it's a premium article, and we're overing over it, and we're not logged in, so show overlay */}
-        {premium && showOverlay && !session.loggedIn && (
+        {premium && showOverlay && !session.jwt && (
           <div
             className="absolute flex items-center	justify-center flex-col"
             style={{

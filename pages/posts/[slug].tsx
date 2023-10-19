@@ -12,7 +12,8 @@ import { CMS_NAME } from '../../lib/constants';
 import markdownToHtml from '../../lib/markdownToHtml';
 import PostType from '../../types/post';
 import { useSession } from '../../context/SessionProvider';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import LoginModal from '../../components/login';
 
 type Props = {
   post: PostType;
@@ -22,15 +23,56 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const { session } = useSession();
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [loginModalIsOpened, setLoginModalIsOpened] = useState(false);
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
-  useEffect(() => {
-    // redirect user if they typed in the URL to a premium article without being logged in
-    if (!session.loggedIn && post.premium) router.push(`/`);
-  }, []);
+  // post is premium and user isn't logged in
+  if (post.premium && !session.jwt) {
+    return (
+      <Layout preview={preview}>
+        <Container>
+          <Header />
+          <article className="mb-32">
+            <Head>
+              <title>
+                {post.title} | Next.js Blog Example with {CMS_NAME}
+              </title>
+              <meta property="og:image" content={post.ogImage.url} />
+            </Head>
+
+            <div>
+              <LoginModal
+                opened={loginModalIsOpened}
+                setOpen={setLoginModalIsOpened}
+              />
+
+              <div className="w-full justify-center">
+                <p className="text-3xl text-center">
+                  This is a premium article and is only available to logged in
+                  users.
+                </p>
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => {
+                      setLoginModalIsOpened(true);
+                    }}
+                    type="button"
+                    className="btn-primary mt-5 justify-self-center"
+                  >
+                    Log in to view
+                  </button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </Container>
+      </Layout>
+    );
+  }
 
   return (
     <Layout preview={preview}>
@@ -47,7 +89,6 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 </title>
                 <meta property="og:image" content={post.ogImage.url} />
               </Head>
-
               <PostHeader
                 premium={post.premium}
                 title={post.title}
