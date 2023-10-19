@@ -34,6 +34,7 @@ const HeroPost = ({
   return (
     <section
       className={`${
+        // post is premium, user isn't logged in, and user is hovering on the article, so disable cursor
         !session.jwt && showOverlay && premium && 'cursor-not-allowed relative'
       }`}
       onMouseEnter={() => {

@@ -23,14 +23,13 @@ type Props = {
 
 const Post = ({ post, morePosts, preview }: Props) => {
   const { session } = useSession();
-  const [showOverlay, setShowOverlay] = useState(false);
   const [loginModalIsOpened, setLoginModalIsOpened] = useState(false);
   const router = useRouter();
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />;
   }
 
-  // post is premium and user isn't logged in
+  // post is premium and user isn't logged in, so prompt login
   if (post.premium && !session.jwt) {
     return (
       <Layout preview={preview}>
