@@ -11,6 +11,8 @@ import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import markdownToHtml from '../../lib/markdownToHtml'
 import PostType from '../../types/post'
+import PremiumLock from "../../components/premium-lock";
+import Cookies from "js-cookie";
 
 type Props = {
   post: PostType
@@ -23,6 +25,9 @@ const Post = ({ post, morePosts, preview }: Props) => {
   if (!router.isFallback && !post?.slug) {
     return <ErrorPage statusCode={404} />
   }
+
+  const postIsHidden = post.premium && !Cookies.get('isLoggedIn');
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -44,7 +49,7 @@ const Post = ({ post, morePosts, preview }: Props) => {
                 date={post.date}
                 author={post.author}
               />
-              <PostBody content={post.content} />
+              {postIsHidden ? <PremiumLock redirectTo={post.slug} /> : <PostBody content={post.content}/>}
             </article>
           </>
         )}
@@ -70,6 +75,7 @@ export async function getStaticProps({ params }: Params) {
     'content',
     'ogImage',
     'coverImage',
+    'premium',
   ])
   const content = await markdownToHtml(post.content || '')
 
