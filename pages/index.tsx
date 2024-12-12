@@ -14,7 +14,7 @@ type Props = {
 
 const Index = ({ allPosts }: Props) => {
   const heroPost = allPosts[0]
-  const morePosts = allPosts.slice()
+  const morePosts = allPosts.slice(1)
   return (
     <>
       <Layout>
@@ -47,6 +47,7 @@ export const getStaticProps = async () => {
     'title',
     'date',
     'slug',
+    'author',
     'coverImage',
     'excerpt',
   ])
